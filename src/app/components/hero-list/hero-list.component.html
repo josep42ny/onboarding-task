@@ -1,3 +1,4 @@
-@for (hero of heros; track hero.id) {
+@for (hero of heroes; track hero.id) {
+<app-hero-card [hero]="hero" />
 <div>{{hero.name}}</div>
 }

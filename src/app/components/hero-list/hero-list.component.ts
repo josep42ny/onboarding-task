@@ -1,17 +1,19 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, Signal, WritableSignal } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
 import { HeroesService } from '../../services/heroes.service';
 import { catchError, retry, Subject, takeUntil, throwError } from 'rxjs';
+import { HeroCardComponent } from '../hero-card/hero-card.component';
 
 @Component({
   selector: 'app-hero-list',
-  imports: [],
+  imports: [HeroCardComponent],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
 })
 export class HeroListComponent implements OnInit, OnDestroy {
+
   private destroyed: Subject<void> = new Subject<void>;
-  private heroes: Hero[] = [];
+  public heroes: Hero[] = [];
   private readonly heroesService = inject(HeroesService);
 
   ngOnDestroy(): void {

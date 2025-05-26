@@ -1,11 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { HeroesService } from '../services/heroes.service';
-import { Hero } from '../interfaces/hero';
-import { catchError, retry, throwError } from 'rxjs';
+import { Component } from '@angular/core';
+import { HeroListComponent } from '../components/hero-list/hero-list.component';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [HeroListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

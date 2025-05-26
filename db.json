@@ -2,14 +2,63 @@
   "hero": [
     {
       "id": 0,
-      "name": "name",
-      "description": "description",
-      "location": "location",
+      "name": "Captain Blaze",
+      "description": "A fearless hero who commands the power of fire and heat.",
+      "location": "Volcanic Ridge",
       "habilities": [
-        "a",
-        "b",
-        "c"
-      ]
+        "Pyrokinesis",
+        "Fire Immunity",
+        "Flame Flight"
+      ],
+      "imageUrl": "https://picsum.photos/400/300"
+    },
+    {
+      "id": 1,
+      "name": "Shadow Viper",
+      "description": "A stealthy vigilante who strikes from the darkness with lightning speed.",
+      "location": "Neo City",
+      "habilities": [
+        "Invisibility",
+        "Martial Arts Mastery",
+        "Shadow Teleportation"
+      ],
+      "imageUrl": "https://picsum.photos/400/300"
+    },
+    {
+      "id": 2,
+      "name": "Aqua Nova",
+      "description": "Protector of the oceans, with control over water and marine life.",
+      "location": "Atlantica",
+      "habilities": [
+        "Hydrokinesis",
+        "Underwater Breathing",
+        "Communication with Sea Creatures"
+      ],
+      "imageUrl": "https://picsum.photos/400/300"
+    },
+    {
+      "id": 3,
+      "name": "Titanium Fist",
+      "description": "A cybernetic warrior with unmatched strength and an indestructible arm.",
+      "location": "Steel Haven",
+      "habilities": [
+        "Super Strength",
+        "Enhanced Durability",
+        "Rocket Punch"
+      ],
+      "imageUrl": "https://picsum.photos/400/300"
+    },
+    {
+      "id": 4,
+      "name": "Mystica",
+      "description": "A powerful sorceress who wields ancient magic to protect the world from dark forces.",
+      "location": "Arcane Valley",
+      "habilities": [
+        "Spellcasting",
+        "Telekinesis",
+        "Dimensional Travel"
+      ],
+      "imageUrl": "https://picsum.photos/400/300"
     }
   ]
 }
