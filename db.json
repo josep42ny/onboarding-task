@@ -1,6 +1,7 @@
 {
-  "supers": [
+  "hero": [
     {
+      "id": 0,
       "name": "name",
       "description": "description",
       "location": "location",
