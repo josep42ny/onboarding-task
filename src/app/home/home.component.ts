@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { HeroesService } from '../services/heroes.service';
+import { Hero } from '../interfaces/hero';
+import { catchError, retry, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-home',

@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Hero } from '../interfaces/hero';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroesService {
-  private apiServerUrl: String = 'http://localhost:3000'
+  private apiServerUrl: String = environment.apiBaseUrl;
   private http: HttpClient = inject(HttpClient);
 
   public getHeroes(): Observable<Hero[]> {
