@@ -1,0 +1,14 @@
+{
+  "supers": [
+    {
+      "name": "name",
+      "description": "description",
+      "location": "location",
+      "habilities": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  ]
+}
