@@ -1,0 +1,22 @@
+.hero-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2em;
+  margin-top: 2rem;
+}
+
+.hero-searchbar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.hero-searchbar {
+  width: 70%;
+}
+
+.hero-list-heading {
+  text-align: center;
+  margin-top: 4rem;
+}

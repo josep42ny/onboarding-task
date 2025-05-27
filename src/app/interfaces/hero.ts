@@ -5,5 +5,6 @@ export interface Hero {
   description: String;
   location: String;
   habilities: String[];
+  imageUrl: String;
 
 }

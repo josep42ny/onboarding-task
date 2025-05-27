@@ -1,0 +1,39 @@
+<div mat-dialog-title class="dialog-title">
+  <h4>Crear nuevo héroe</h4>
+  <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+</div>
+
+<mat-dialog-content class="form-container">
+  <form id="hForm" [formGroup]="heroForm" (submit)="submit()">
+
+    <mat-form-field class="form-field" appearance="outline" floatLabel="auto">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="firstName" required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline" floatLabel="auto">
+      <mat-label>Superpoder</mat-label>
+      <input matInput formControlName="habilities" required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field span-2" appearance="outline" floatLabel="auto">
+      <mat-label>Sevilla, Esp.</mat-label>
+      <input matInput formControlName="location" required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field span-2" appearance="outline" floatLabel="auto">
+      <mat-label>Descripcción</mat-label>
+      <textarea matInput formControlName="description" required></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="form-field span-2" appearance="outline" floatLabel="auto">
+      <mat-label>Url de la imagen</mat-label>
+      <input matInput formControlName="image" required />
+    </mat-form-field>
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <mat-checkbox form="hForm" required>Acepto los Terminos y Condiciones</mat-checkbox>
+  <button form="hForm" mat-flat-button type="submit" [disabled]="!heroForm.valid">Crear héroe</button>
+</mat-dialog-actions>

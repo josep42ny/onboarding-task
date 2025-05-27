@@ -1,0 +1,18 @@
+.form-container {
+  form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+  }
+}
+
+.dialog-title,
+mat-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.span-2 {
+  grid-column: span 2;
+}

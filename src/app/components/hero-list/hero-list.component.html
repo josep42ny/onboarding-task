@@ -1,4 +1,24 @@
-@for (hero of heroes; track hero.id) {
-<app-hero-card [hero]="hero" />
-<div>{{hero.name}}</div>
-}
+<div class="hero-searchbar-wrapper">
+  <mat-form-field subscriptSizing="dynamic" class="hero-searchbar" appearance="outline">
+    <mat-label>Busca un héroe</mat-label>
+    <input matInput type="search">
+    <button matSuffix mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button mat-flat-button (click)="openAddEditHeroForm()"><mat-icon>add</mat-icon> Crear nuevo héroe</button>
+</div>
+
+<div class="hero-list-heading">
+  <h1>Héroes más allá de la imaginación</h1>
+  <p>Desd tiempos inmemoriales, la humanidad ha soñado con figuras extraordinarias <br> capaces de desafiar los límities
+    de
+    la realidad. </p>
+</div>
+
+<div class="hero-list">
+  @for (hero of heroes(); track hero.id) {
+  <app-hero-card [heroInfo]="hero" />
+  }
+</div>

@@ -1,0 +1,20 @@
+.dialog-title,
+mat-dialog-actions {
+  display: flex;
+  align-items: center;
+}
+
+
+.dialog-title {
+  justify-content: space-between;
+}
+
+mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.hero-delete {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}

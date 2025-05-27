@@ -10,7 +10,7 @@
         "Fire Immunity",
         "Flame Flight"
       ],
-      "imageUrl": "https://picsum.photos/400/300"
+      "imageUrl": "https://picsum.photos/seed/1/400/300"
     },
     {
       "id": 1,
@@ -22,7 +22,7 @@
         "Martial Arts Mastery",
         "Shadow Teleportation"
       ],
-      "imageUrl": "https://picsum.photos/400/300"
+      "imageUrl": "https://picsum.photos/seed/2/400/300"
     },
     {
       "id": 2,
@@ -34,7 +34,7 @@
         "Underwater Breathing",
         "Communication with Sea Creatures"
       ],
-      "imageUrl": "https://picsum.photos/400/300"
+      "imageUrl": "https://picsum.photos/seed/3/400/300"
     },
     {
       "id": 3,
@@ -46,7 +46,7 @@
         "Enhanced Durability",
         "Rocket Punch"
       ],
-      "imageUrl": "https://picsum.photos/400/300"
+      "imageUrl": "https://picsum.photos/seed/4/400/300"
     },
     {
       "id": 4,
@@ -58,7 +58,7 @@
         "Telekinesis",
         "Dimensional Travel"
       ],
-      "imageUrl": "https://picsum.photos/400/300"
+      "imageUrl": "https://picsum.photos/seed/5/400/300"
     }
   ]
 }
