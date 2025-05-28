@@ -11,7 +11,7 @@ import { Hero } from '../../interfaces/hero';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-hero-add-edit',
+  selector: 'app-insert-dialog',
   imports: [MatDialogModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -20,12 +20,12 @@ import { Observable } from 'rxjs';
     MatButtonModule,
     MatCheckboxModule,
   ],
-  templateUrl: './hero-add-edit.component.html',
-  styleUrl: './hero-add-edit.component.scss'
+  templateUrl: './insert-dialog.component.html',
+  styleUrl: './insert-dialog.component.scss'
 })
-export class HeroAddEditComponent {
+export class InsertDialogComponent {
 
-  constructor(public dialogRef: MatDialogRef<HeroAddEditComponent>) { }
+  constructor(public dialogRef: MatDialogRef<InsertDialogComponent>) { }
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
   protected heroForm: FormGroup = this.formBuilder.group({

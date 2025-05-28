@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HeroAddEditComponent } from './hero-add-edit.component';
+import { InsertDialogComponent } from './insert-dialog.component';
 
-describe('HeroAddEditComponent', () => {
-  let component: HeroAddEditComponent;
-  let fixture: ComponentFixture<HeroAddEditComponent>;
+describe('InsertDialogComponent', () => {
+  let component: InsertDialogComponent;
+  let fixture: ComponentFixture<InsertDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeroAddEditComponent]
+      imports: [InsertDialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HeroAddEditComponent);
+    fixture = TestBed.createComponent(InsertDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

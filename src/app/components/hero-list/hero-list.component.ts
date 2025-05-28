@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
-import { HeroAddEditComponent } from '../hero-add-edit/hero-add-edit.component';
+import { InsertDialogComponent } from '../insert-dialog/insert-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
@@ -49,12 +49,12 @@ export class HeroListComponent implements OnInit, OnDestroy {
   }
 
   openAddEditHeroForm(): void {
-    const dialogRef = this.matDialog.open(HeroAddEditComponent, {
-      width: '60%',
+    const insertDialogRef = this.matDialog.open(InsertDialogComponent, {
+      width: '40%',
       maxWidth: '100vw'
     });
 
-    dialogRef.afterClosed().subscribe(hero => {
+    insertDialogRef.afterClosed().subscribe(hero => {
       this.heroesService.addHero(hero)
         .subscribe(_ => {
           this.getHeroes();

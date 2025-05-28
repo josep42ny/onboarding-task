@@ -5,7 +5,7 @@
       "name": "Captain Blaze",
       "description": "A fearless hero who commands the power of fire and heat.",
       "location": "Volcanic Ridge",
-      "powers": "Pyrokinesis, Fire Immunity, Flame Flight",
+      "powers": "Pyrokinesis",
       "imageUrl": "https://picsum.photos/seed/1/400/300"
     },
     {
@@ -13,7 +13,7 @@
       "name": "Shadow Viper",
       "description": "A stealthy vigilante who strikes from the darkness with lightning speed.",
       "location": "Neo City",
-      "powers": "Invisibility, Martial Arts Mastery, Shadow Teleportation",
+      "powers": "Invisibility",
       "imageUrl": "https://picsum.photos/seed/2/400/300"
     },
     {
@@ -21,7 +21,7 @@
       "name": "Aqua Nova",
       "description": "Protector of the oceans, with control over water and marine life.",
       "location": "Atlantica",
-      "powers": "Hydrokinesis, Underwater Breathing, Communication with Sea Creatures",
+      "powers": "Hydrokinesis",
       "imageUrl": "https://picsum.photos/seed/3/400/300"
     },
     {
@@ -29,7 +29,7 @@
       "name": "Titanium Fist",
       "description": "A cybernetic warrior with unmatched strength and an indestructible arm.",
       "location": "Steel Haven",
-      "powers": "Super Strength, Enhanced Durability, Rocket Punch",
+      "powers": "Super",
       "imageUrl": "https://picsum.photos/seed/4/400/300"
     },
     {
@@ -37,16 +37,8 @@
       "name": "Mystica",
       "description": "A powerful sorceress who wields ancient magic to protect the world from dark forces.",
       "location": "Arcane Valley",
-      "powers": "Spellcasting, Telekinesis, Dimensional Travel",
+      "powers": "Spellcasting",
       "imageUrl": "https://picsum.photos/seed/5/400/300"
-    },
-    {
-      "name": "https://picsum.photos/seed/3/400/300",
-      "description": "https://picsum.photos/seed/3/400/300",
-      "location": "https://picsum.photos/seed/3/400/300",
-      "powers": "https://picsum.photos/seed/3/400/300",
-      "imageUrl": "https://picsum.photos/seed/3/400/300",
-      "id": 7
     }
   ]
 }

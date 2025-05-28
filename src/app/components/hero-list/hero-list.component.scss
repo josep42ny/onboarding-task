@@ -1,7 +1,6 @@
 .hero-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2em;
+  grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
   margin-top: 2rem;
 }
 

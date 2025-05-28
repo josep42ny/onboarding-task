@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-hero-delete',
+  selector: 'app-delete-dialog',
   imports: [MatDialogModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -17,12 +17,12 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatCheckboxModule,
   ],
-  templateUrl: './hero-delete.component.html',
-  styleUrl: './hero-delete.component.scss'
+  templateUrl: './delete-dialog.component.html',
+  styleUrl: './delete-dialog.component.scss'
 })
-export class HeroDeleteComponent {
+export class DeleteDialogComponent {
 
-  constructor(public dialogRef: MatDialogRef<HeroDeleteComponent>) { }
+  constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>) { }
 
   protected confirm(): void {
     this.dialogRef.close(true);

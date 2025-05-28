@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 import { Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
-import { HeroDeleteComponent } from '../hero-delete/hero-delete.component';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HeroesService } from '../../services/heroes.service';
 import { MatChipsModule } from '@angular/material/chips';
@@ -27,12 +27,12 @@ export class HeroCardComponent {
       return;
     }
 
-    const dialogRef = this.matDialog.open(HeroDeleteComponent, {
+    const delDialogRef = this.matDialog.open(DeleteDialogComponent, {
       width: '30%',
       maxWidth: '100vw'
     });
 
-    dialogRef.afterClosed().subscribe(confirmed => {
+    delDialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.heroesService.deleteHero(hero.id).subscribe(data => {
           this.updateEvent.emit();
