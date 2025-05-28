@@ -10,10 +10,19 @@ import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { InsertDialogComponent } from '../insert-dialog/insert-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-hero-list',
-  imports: [HeroCardComponent, MatGridListModule, MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule],
+  imports: [
+    HeroCardComponent,
+    MatGridListModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    NgxSkeletonLoaderModule
+  ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
 })

@@ -8,10 +8,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { HeroesService } from '../../services/heroes.service';
 import { MatChipsModule } from '@angular/material/chips';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-hero-card',
-  imports: [MatCardModule, MatButtonModule, MatIconModule, MatChipsModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, MatChipsModule, NgxSkeletonLoaderModule],
   templateUrl: './hero-card.component.html',
   styleUrl: './hero-card.component.scss'
 })
@@ -30,7 +31,8 @@ export class HeroCardComponent {
 
     const delDialogRef = this.matDialog.open(UpdateDialogComponent, {
       width: '30%',
-      maxWidth: '100vw'
+      maxWidth: '100vw',
+      data: hero
     });
 
     delDialogRef.afterClosed().subscribe(hero => {
