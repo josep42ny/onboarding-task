@@ -24,7 +24,6 @@ export class HeroesService {
   }
 
   public deleteHero(heroId: number): Observable<void> {
-    console.log(`${this.apiServerUrl}/hero/${heroId}`);
     return this.http.delete<void>(`${this.apiServerUrl}/hero/${heroId}`);
   }
 

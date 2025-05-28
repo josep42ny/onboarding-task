@@ -39,6 +39,14 @@
       "location": "Arcane Valley",
       "powers": "Spellcasting, Telekinesis, Dimensional Travel",
       "imageUrl": "https://picsum.photos/seed/5/400/300"
+    },
+    {
+      "name": "https://picsum.photos/seed/3/400/300",
+      "description": "https://picsum.photos/seed/3/400/300",
+      "location": "https://picsum.photos/seed/3/400/300",
+      "powers": "https://picsum.photos/seed/3/400/300",
+      "imageUrl": "https://picsum.photos/seed/3/400/300",
+      "id": 7
     }
   ]
 }

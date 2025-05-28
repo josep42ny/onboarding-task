@@ -56,8 +56,9 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(hero => {
       this.heroesService.addHero(hero)
-        .subscribe(result => {
-          console.log(result)
+        .subscribe(_ => {
+          this.getHeroes();
+          // TODO: confirmation popup
         });
     });
   }

@@ -1,15 +1,16 @@
 import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
-import { AfterViewInit, Component, EventEmitter, inject, input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
 import { HeroDeleteComponent } from '../hero-delete/hero-delete.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { HeroesService } from '../../services/heroes.service';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-hero-card',
-  imports: [MatCardModule, MatButtonModule, MatIconModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, MatChipsModule],
   templateUrl: './hero-card.component.html',
   styleUrl: './hero-card.component.scss'
 })
@@ -35,6 +36,7 @@ export class HeroCardComponent {
       if (confirmed) {
         this.heroesService.deleteHero(hero.id).subscribe(data => {
           this.updateEvent.emit();
+          // TODO: confirmation popup
         });
       }
     });

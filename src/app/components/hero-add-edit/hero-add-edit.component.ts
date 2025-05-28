@@ -7,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { Hero } from '../../interfaces/hero';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-hero-add-edit',
@@ -27,16 +29,15 @@ export class HeroAddEditComponent {
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
   protected heroForm: FormGroup = this.formBuilder.group({
-    firstName: ['', Validators.required],
-    habilities: ['', Validators.required],
-    location: ['', Validators.required],
+    name: ['', Validators.required],
     description: ['', Validators.required],
-    image: ['', Validators.required],
+    location: ['', Validators.required],
+    powers: ['', Validators.required],
+    imageUrl: ['', Validators.required],
   });
 
   protected submit(): void {
-    const result: Object = this.heroForm.value;
-    console.log(result);
+    const result: Hero = this.heroForm.value;
     this.dialogRef.close(result);
   }
 
