@@ -15,12 +15,16 @@ export class HeroesService {
     return this.http.get<Hero[]>(`${this.apiServerUrl}/hero`);
   }
 
+  public getHero(heroId: number): Observable<Hero> {
+    return this.http.get<Hero>(`${this.apiServerUrl}/hero/${heroId}`);
+  }
+
   public addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(`${this.apiServerUrl}/hero`, hero);
   }
 
   public updateHero(hero: Hero): Observable<Hero> {
-    return this.http.put<Hero>(`${this.apiServerUrl}/hero`, hero);
+    return this.http.put<Hero>(`${this.apiServerUrl}/hero/${hero.id}`, hero);
   }
 
   public deleteHero(heroId: number): Observable<void> {
