@@ -2,11 +2,7 @@
   <img mat-card-image src="{{heroInfo()?.imageUrl}}" alt="Photo of a superhero">
   <mat-card-content>
     <h3>{{heroInfo()?.name}}</h3>
-    <p>
-      @for (hability of heroInfo()?.habilities; track $index) {
-      {{hability}}
-      }
-    </p>
+    <p>{{heroInfo()?.powers}}</p>
     <p>{{heroInfo()?.description}}</p>
     <small><mat-icon style="scale: 0.75;">location_on</mat-icon> {{heroInfo()?.location}}</small>
   </mat-card-content>
