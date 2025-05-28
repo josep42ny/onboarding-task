@@ -49,9 +49,17 @@ export class HeroListComponent implements OnInit, OnDestroy {
   }
 
   openAddEditHeroForm(): void {
-    this.matDialog.open(HeroAddEditComponent, {
+    const dialogRef = this.matDialog.open(HeroAddEditComponent, {
       width: '60%',
       maxWidth: '100vw'
     });
+
+    dialogRef.afterClosed().subscribe(hero => {
+      this.heroesService.addHero(hero)
+        .subscribe(result => {
+          console.log(result)
+        });
+    });
   }
+
 }

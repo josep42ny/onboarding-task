@@ -11,8 +11,7 @@
     <small><mat-icon style="scale: 0.75;">location_on</mat-icon> {{heroInfo()?.location}}</small>
   </mat-card-content>
   <mat-card-actions>
-    <!-- TODO: pass self reference or id to delete -->
-    <button mat-button (click)="openDeleteHeroForm()">Eliminar</button>
+    <button mat-button (click)="openDeleteHeroForm(heroInfo())">Eliminar</button>
     <button mat-flat-button><mat-icon>edit</mat-icon> Editar</button>
   </mat-card-actions>
 </mat-card>

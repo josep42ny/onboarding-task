@@ -19,6 +19,6 @@
 
 <div class="hero-list">
   @for (hero of heroes(); track hero.id) {
-  <app-hero-card [heroInfo]="hero" />
+  <app-hero-card (updateEvent)="getHeroes()" [heroInfo]="hero" />
   }
 </div>

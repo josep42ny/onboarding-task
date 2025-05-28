@@ -16,6 +16,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-flat-button>Si, eliminar</button>
+  <button mat-button mat-dialog-close (click)="dismiss()">Cancelar</button>
+  <button mat-flat-button (click)="confirm()">Si, eliminar</button>
 </mat-dialog-actions>

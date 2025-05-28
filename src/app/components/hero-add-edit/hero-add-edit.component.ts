@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +23,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 })
 export class HeroAddEditComponent {
 
+  constructor(public dialogRef: MatDialogRef<HeroAddEditComponent>) { }
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
   protected heroForm: FormGroup = this.formBuilder.group({
@@ -34,7 +35,9 @@ export class HeroAddEditComponent {
   });
 
   protected submit(): void {
-
+    const result: Object = this.heroForm.value;
+    console.log(result);
+    this.dialogRef.close(result);
   }
 
 }
