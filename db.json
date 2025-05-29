@@ -17,14 +17,6 @@
       "imageUrl": "https://picsum.photos/seed/2/400/300"
     },
     {
-      "id": 2,
-      "name": "Aqua Nova",
-      "description": "Protector of the oceans, with control over water and marine life.",
-      "location": "Atlantica",
-      "powers": "Hydrokinesis",
-      "imageUrl": "https://picsum.photos/seed/3/400/300"
-    },
-    {
       "id": 3,
       "name": "Titanium Fist",
       "description": "A cybernetic warrior with unmatched strength and an indestructible arm.",
@@ -39,6 +31,14 @@
       "location": "Arcane Valley",
       "powers": "Spellcasting",
       "imageUrl": "https://picsum.photos/seed/5/400/300"
+    },
+    {
+      "name": "aAaAAa",
+      "description": "a",
+      "location": "a",
+      "powers": "aa",
+      "imageUrl": "a",
+      "id": 5
     }
   ]
 }

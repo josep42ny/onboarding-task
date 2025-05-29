@@ -1,7 +1,7 @@
 import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
-import { Component, EventEmitter, inject, input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, input, output, Output } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +9,7 @@ import { HeroesService } from '../../services/heroes.service';
 import { MatChipsModule } from '@angular/material/chips';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-hero-card',
@@ -18,12 +19,12 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 })
 export class HeroCardComponent {
   private readonly matDialog = inject(MatDialog);
+  private readonly matSnack = inject(MatSnackBar);
   private readonly heroesService = inject(HeroesService);
-  heroInfo = input<Hero>();
+  public heroInfo = input<Hero>();
+  public onCardChange = output<void>();
 
-  @Output() updateEvent: EventEmitter<void> = new EventEmitter<void>();
-
-  openEditHeroForm(hero: Hero | undefined): void {
+  public openEditHeroForm(hero: Hero | undefined): void {
 
     if (hero === undefined) {
       return;
@@ -37,14 +38,14 @@ export class HeroCardComponent {
 
     delDialogRef.afterClosed().subscribe(hero => {
       this.heroesService.updateHero(hero).subscribe(data => {
-        this.updateEvent.emit();
+        this.onCardChange.emit();
         // TODO: confirmation popup
       });
     });
 
   }
 
-  openDeleteHeroForm(hero: Hero | undefined): void {
+  public openDeleteHeroForm(hero: Hero | undefined): void {
 
     if (hero === undefined) {
       return;
@@ -58,12 +59,23 @@ export class HeroCardComponent {
     delDialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.heroesService.deleteHero(hero.id).subscribe(data => {
-          this.updateEvent.emit();
-          // TODO: confirmation popup
+          this.onCardChange.emit();
+          this.showMessage("Este heroe se ha eliminado");
         });
       }
     });
 
+  }
+
+  showMessage(
+    message: string,
+    vertical: MatSnackBarVerticalPosition = 'top'
+  ): void {
+    this.matSnack.open(message, "", {
+      duration: 2000,
+      verticalPosition: vertical,
+      panelClass: ['success']
+    });
   }
 
 }

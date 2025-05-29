@@ -1,9 +1,17 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { NgxSkeletonLoaderModule, provideNgxSkeletonLoader } from 'ngx-skeleton-loader';
+import { provideNgxSkeletonLoader } from 'ngx-skeleton-loader';
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { httpRequestInterceptor } from './interceptors/http-request.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideNgxSkeletonLoader(), provideHttpClient(), provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
+  providers: [
+    provideNgxSkeletonLoader(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideHttpClient(
+      withInterceptors([httpRequestInterceptor]),
+    ),
+  ]
 };

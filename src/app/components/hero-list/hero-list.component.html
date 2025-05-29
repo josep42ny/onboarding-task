@@ -1,3 +1,10 @@
+@if (loading()) {
+<div class="loading-container">
+  <mat-spinner></mat-spinner>
+</div>
+}
+
+
 <div class="hero-searchbar-wrapper">
   <mat-form-field subscriptSizing="dynamic" class="hero-searchbar" appearance="outline">
     <mat-label>Busca un héroe</mat-label>
@@ -20,6 +27,6 @@
 
 <div class="hero-list">
   @for (hero of heroes(); track hero.id) {
-  <app-hero-card (updateEvent)="getHeroes()" [heroInfo]="hero" />
+  <app-hero-card (onCardChange)="getHeroes()" [heroInfo]="hero" />
   }
 </div>

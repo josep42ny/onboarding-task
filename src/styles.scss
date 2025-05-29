@@ -24,3 +24,21 @@ body {
   background: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
 }
+
+.success {
+  background-color: rgb(66, 255, 167);
+}
+
+.fail {
+  background-color: rgb(206, 80, 80);
+}
+
+div.mdc-snackbar__surface.mat-mdc-snackbar-surface {
+  background-color: transparent;
+  color: unset;
+}
+
+div.mdc-snackbar__surface.mat-mdc-snackbar-surface * {
+  font-weight: 500;
+  color: black;
+}

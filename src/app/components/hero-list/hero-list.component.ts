@@ -1,7 +1,7 @@
-import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
 import { HeroesService } from '../../services/heroes.service';
-import { catchError, retry, Subject, takeUntil, throwError } from 'rxjs';
+import { catchError, delay, retry, Subject, takeUntil, throwError } from 'rxjs';
 import { HeroCardComponent } from '../hero-card/hero-card.component';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -9,8 +9,10 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { InsertDialogComponent } from '../insert-dialog/insert-dialog.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { LoadingService } from '../../services/loading.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-hero-list',
@@ -21,7 +23,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    NgxSkeletonLoaderModule
+    MatProgressSpinnerModule
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
@@ -30,8 +32,11 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   private destroyed: Subject<void> = new Subject<void>;
   public heroes: WritableSignal<Hero[]> = signal([]);
+  public loading: WritableSignal<boolean> = signal(false);
   private readonly heroesService = inject(HeroesService);
+  private readonly loadingService = inject(LoadingService);
   private readonly matDialog = inject(MatDialog);
+  private readonly matSnack = inject(MatSnackBar);
 
   ngOnDestroy(): void {
     this.destroyed.next();
@@ -40,6 +45,7 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getHeroes();
+    this.listenToLoading();
   }
 
   public getHeroes(): void {
@@ -57,7 +63,15 @@ export class HeroListComponent implements OnInit, OnDestroy {
       });
   }
 
-  openAddHeroForm(): void {
+  private listenToLoading(): void {
+    this.loadingService.getLoadingSubject()
+      .pipe(delay(0))
+      .subscribe(load =>
+        this.loading.set(load)
+      );
+  }
+
+  public openAddHeroForm(): void {
     const insertDialogRef = this.matDialog.open(InsertDialogComponent, {
       width: '40%',
       maxWidth: '100vw'
@@ -83,8 +97,19 @@ export class HeroListComponent implements OnInit, OnDestroy {
     this.heroesService.addHero(hero)
       .subscribe(_ => {
         this.getHeroes();
-        // TODO: confirmation popup
+        this.showMessage("Héroe creado con éxito");
       });
+  }
+
+  showMessage(
+    message: string,
+    vertical: MatSnackBarVerticalPosition = 'top'
+  ): void {
+    this.matSnack.open(message, "", {
+      duration: 2000,
+      verticalPosition: vertical,
+      panelClass: ['success']
+    });
   }
 
 }
