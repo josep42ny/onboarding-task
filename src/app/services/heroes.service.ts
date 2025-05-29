@@ -11,8 +11,8 @@ export class HeroesService {
   private apiServerUrl: String = environment.apiBaseUrl;
   private http: HttpClient = inject(HttpClient);
 
-  public getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(`${this.apiServerUrl}/hero`);
+  public getHeroes(searchByName: string = ''): Observable<Hero[]> {
+    return this.http.get<Hero[]>(`${this.apiServerUrl}/hero?name_like=${searchByName}`);
   }
 
   public getHero(heroId: number): Observable<Hero> {

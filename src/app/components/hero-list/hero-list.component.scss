@@ -12,7 +12,11 @@
 }
 
 .hero-searchbar {
-  width: 70%;
+  flex: 1 1 auto;
+}
+
+.hero-searchbar>* {
+  width: 100%;
 }
 
 .hero-list-heading {

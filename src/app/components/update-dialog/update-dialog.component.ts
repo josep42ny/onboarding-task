@@ -27,9 +27,9 @@ export class UpdateDialogComponent implements OnInit {
 
   //constructor(public dialogRef: MatDialogRef<InsertDialogComponent>) { }
   @Inject(MAT_DIALOG_DATA) public selectedHero: any;
-  private readonly dialogRef: MatDialogRef<InsertDialogComponent> = inject(MatDialogRef);
-  private readonly formBuilder: FormBuilder = inject(FormBuilder);
-  private readonly heroesService: HeroesService = inject(HeroesService);
+  private readonly dialogRef = inject(MatDialogRef);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly heroesService = inject(HeroesService);
   protected form: FormGroup | any;
 
   ngOnInit(): void {
@@ -37,7 +37,6 @@ export class UpdateDialogComponent implements OnInit {
   }
 
   private createForm(): void {
-    console.log(this.selectedHero);
     this.heroesService.getHero(this.selectedHero.id).subscribe(hero => {
       this.form = this.formBuilder.group(hero);
     });

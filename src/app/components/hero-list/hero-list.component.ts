@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { LoadingService } from '../../services/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-hero-list',
@@ -23,7 +24,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ReactiveFormsModule
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
@@ -34,9 +36,11 @@ export class HeroListComponent implements OnInit, OnDestroy {
   public heroes: WritableSignal<Hero[]> = signal([]);
   public loading: WritableSignal<boolean> = signal(false);
   private readonly heroesService = inject(HeroesService);
+  private readonly formBuilder = inject(FormBuilder);
   private readonly loadingService = inject(LoadingService);
   private readonly matDialog = inject(MatDialog);
   private readonly matSnack = inject(MatSnackBar);
+  public searchForm: FormGroup = this.formBuilder.group({ search: [''] });
 
   ngOnDestroy(): void {
     this.destroyed.next();
@@ -48,8 +52,13 @@ export class HeroListComponent implements OnInit, OnDestroy {
     this.listenToLoading();
   }
 
-  public getHeroes(): void {
-    this.heroesService.getHeroes()
+  public onSearchSubmit(): void {
+    const searchValue = this.searchForm.value.search;
+    this.getHeroes(searchValue);
+  }
+
+  public getHeroes(searchByName: string = ''): void {
+    this.heroesService.getHeroes(searchByName)
       .pipe(
         retry(2),
         catchError(error => {

@@ -25,7 +25,7 @@ import { Hero } from '../../interfaces/hero';
 export class InsertDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<InsertDialogComponent>) { }
-  private readonly formBuilder: FormBuilder = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   protected heroForm: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],
