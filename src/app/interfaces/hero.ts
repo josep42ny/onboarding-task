@@ -1,10 +1,10 @@
 export interface Hero {
 
   id: number;
-  name: String;
-  description: String;
-  location: String;
-  powers: String;
-  imageUrl: String;
+  name: string;
+  description: string;
+  location: string;
+  powers: string;
+  imageUrl: string;
 
 }

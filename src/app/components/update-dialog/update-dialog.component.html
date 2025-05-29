@@ -7,6 +7,11 @@
   <form id="hForm" [formGroup]="form" (submit)="submit()">
 
     <mat-form-field class="form-field" appearance="outline" floatLabel="auto">
+      <mat-label>Id</mat-label>
+      <input matInput formControlName="id" required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline" floatLabel="auto">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="name" required />
     </mat-form-field>

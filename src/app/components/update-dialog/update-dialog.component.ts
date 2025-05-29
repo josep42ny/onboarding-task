@@ -1,7 +1,6 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { InsertDialogComponent } from '../insert-dialog/insert-dialog.component';
 import { Hero } from '../../interfaces/hero';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,27 +24,37 @@ import { HeroesService } from '../../services/heroes.service';
 })
 export class UpdateDialogComponent implements OnInit {
 
-  //constructor(public dialogRef: MatDialogRef<InsertDialogComponent>) { }
-  @Inject(MAT_DIALOG_DATA) public selectedHero: any;
+  constructor(@Inject(MAT_DIALOG_DATA) public selectedHero: Hero) { };
   private readonly dialogRef = inject(MatDialogRef);
   private readonly formBuilder = inject(FormBuilder);
   private readonly heroesService = inject(HeroesService);
-  protected form: FormGroup | any;
+  public form = this.formBuilder.group({
+    id: [-1, Validators.required],
+    name: ['', Validators.required],
+    description: ['', Validators.required],
+    location: ['', Validators.required],
+    powers: ['', Validators.required],
+    imageUrl: ['', Validators.required],
+  });
 
   ngOnInit(): void {
-    this.createForm();
+    this.heroesService.getHero(this.selectedHero.id)
+      .subscribe(hero => {
+        this.form.setValue({
+          id: hero.id,
+          name: hero.name,
+          description: hero.description,
+          location: hero.location,
+          powers: hero.powers,
+          imageUrl: hero.imageUrl,
+        });
+      });
   }
 
-  private createForm(): void {
-    this.heroesService.getHero(this.selectedHero.id).subscribe(hero => {
-      this.form = this.formBuilder.group(hero);
-    });
-  }
 
   protected submit(): void {
-    const result: Hero = this.form.value;
-    console.log(result);
-    //this.dialogRef.close(result);
+    //const result: Hero = this.form.value;
+    this.dialogRef.close(this.form.value);
   }
 
 }

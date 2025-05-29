@@ -30,16 +30,19 @@ export class HeroCardComponent {
       return;
     }
 
-    const delDialogRef = this.matDialog.open(UpdateDialogComponent, {
+    const modDialogRef = this.matDialog.open(UpdateDialogComponent, {
       width: '30%',
       maxWidth: '100vw',
-      data: hero
+      data: { hero }
     });
 
-    delDialogRef.afterClosed().subscribe(hero => {
+    modDialogRef.afterClosed().subscribe(hero => {
+      if (!hero) {
+        return;
+      }
       this.heroesService.updateHero(hero).subscribe(data => {
         this.onCardChange.emit();
-        // TODO: confirmation popup
+        this.showMessage("Héroe modificado con éxito");
       });
     });
 
@@ -60,7 +63,7 @@ export class HeroCardComponent {
       if (confirmed) {
         this.heroesService.deleteHero(hero.id).subscribe(data => {
           this.onCardChange.emit();
-          this.showMessage("Este heroe se ha eliminado");
+          this.showMessage("Este héroe se ha eliminado");
         });
       }
     });
