@@ -57,19 +57,34 @@ export class HeroListComponent implements OnInit, OnDestroy {
       });
   }
 
-  openAddEditHeroForm(): void {
+  openAddHeroForm(): void {
     const insertDialogRef = this.matDialog.open(InsertDialogComponent, {
       width: '40%',
       maxWidth: '100vw'
     });
 
-    insertDialogRef.afterClosed().subscribe(hero => {
-      this.heroesService.addHero(hero)
-        .subscribe(_ => {
-          this.getHeroes();
-          // TODO: confirmation popup
-        });
-    });
+    insertDialogRef.afterClosed()
+      .subscribe(hero => {
+        if (this.isHero(hero)) {
+          this.addHero(hero);
+        }
+      });
+  }
+
+  private isHero(value: Hero): value is Hero {
+    if (value.name) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private addHero(hero: Hero): void {
+    this.heroesService.addHero(hero)
+      .subscribe(_ => {
+        this.getHeroes();
+        // TODO: confirmation popup
+      });
   }
 
 }

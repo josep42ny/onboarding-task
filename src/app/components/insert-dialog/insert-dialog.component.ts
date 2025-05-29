@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { Hero } from '../../interfaces/hero';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-insert-dialog',
