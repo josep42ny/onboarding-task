@@ -1,6 +1,7 @@
 .card {
   margin: 1em;
   max-width: 300px;
+  min-height: 450px;
 }
 
 img {
@@ -9,9 +10,18 @@ img {
   object-fit: cover;
 }
 
+mat-card {
+  display: flex;
+  flex-direction: column;
+}
+
 mat-card-actions {
   gap: 0.75em;
   padding: 0.25em 1em 1em 1em;
+}
+
+mat-card-content {
+  flex: 1 0 auto;
 }
 
 mat-card-content p {

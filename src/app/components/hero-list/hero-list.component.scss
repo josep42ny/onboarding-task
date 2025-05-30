@@ -2,13 +2,15 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
   margin-top: 2rem;
+  justify-items: center;
 }
 
 .hero-searchbar-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2em;
+  flex-wrap: wrap;
+  gap: 1em;
 }
 
 .hero-searchbar {
