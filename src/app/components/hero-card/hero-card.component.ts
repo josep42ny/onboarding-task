@@ -33,7 +33,7 @@ export class HeroCardComponent {
     const modDialogRef = this.matDialog.open(UpdateDialogComponent, {
       width: '30%',
       maxWidth: '100vw',
-      data: { hero }
+      data: hero
     });
 
     modDialogRef.afterClosed().subscribe(hero => {

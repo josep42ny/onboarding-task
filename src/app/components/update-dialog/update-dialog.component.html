@@ -7,11 +7,6 @@
   <form id="hForm" [formGroup]="form" (submit)="submit()">
 
     <mat-form-field class="form-field" appearance="outline" floatLabel="auto">
-      <mat-label>Id</mat-label>
-      <input matInput formControlName="id" required />
-    </mat-form-field>
-
-    <mat-form-field class="form-field" appearance="outline" floatLabel="auto">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="name" required />
     </mat-form-field>
@@ -22,7 +17,7 @@
     </mat-form-field>
 
     <mat-form-field class="form-field span-2" appearance="outline" floatLabel="auto">
-      <mat-label>Sevilla, Esp.</mat-label>
+      <mat-label>Ciudad</mat-label>
       <input matInput formControlName="location" required />
     </mat-form-field>
 
@@ -35,10 +30,13 @@
       <mat-label>Url de la imagen</mat-label>
       <input matInput formControlName="imageUrl" required />
     </mat-form-field>
+
+    <div class="actions span-2">
+      <mat-checkbox formControlName="terms" required>Acepto los <a href="https://example.com">Terminos y
+          Condiciones</a></mat-checkbox>
+      <button form="hForm" mat-flat-button type="submit" [disabled]="form.invalid">Guardar cambios</button>
+    </div>
+
   </form>
 
 </mat-dialog-content>
-<mat-dialog-actions>
-  <mat-checkbox form="hForm" required>Acepto los Terminos y Condiciones</mat-checkbox>
-  <button form="hForm" mat-flat-button type="submit" [disabled]="!form.valid">Guardar cambios</button>
-</mat-dialog-actions>

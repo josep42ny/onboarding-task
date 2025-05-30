@@ -6,12 +6,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { HeroesService } from '../../services/heroes.service';
 
 @Component({
   selector: 'app-update-dialog',
-  imports: [MatDialogModule,
+  imports: [
+    MatDialogModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -28,6 +29,7 @@ export class UpdateDialogComponent implements OnInit {
   private readonly dialogRef = inject(MatDialogRef);
   private readonly formBuilder = inject(FormBuilder);
   private readonly heroesService = inject(HeroesService);
+
   public form = this.formBuilder.group({
     id: [-1, Validators.required],
     name: ['', Validators.required],
@@ -35,9 +37,11 @@ export class UpdateDialogComponent implements OnInit {
     location: ['', Validators.required],
     powers: ['', Validators.required],
     imageUrl: ['', Validators.required],
+    terms: [false, Validators.requiredTrue],
   });
 
   ngOnInit(): void {
+    console.log(this.selectedHero.id);
     this.heroesService.getHero(this.selectedHero.id)
       .subscribe(hero => {
         this.form.setValue({
@@ -47,13 +51,12 @@ export class UpdateDialogComponent implements OnInit {
           location: hero.location,
           powers: hero.powers,
           imageUrl: hero.imageUrl,
+          terms: false,
         });
       });
   }
 
-
   protected submit(): void {
-    //const result: Hero = this.form.value;
     this.dialogRef.close(this.form.value);
   }
 

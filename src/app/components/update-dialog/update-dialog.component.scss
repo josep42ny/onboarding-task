@@ -16,3 +16,10 @@ mat-dialog-actions {
 .span-2 {
   grid-column: span 2;
 }
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}

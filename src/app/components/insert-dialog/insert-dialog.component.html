@@ -4,7 +4,7 @@
 </div>
 
 <mat-dialog-content class="form-container">
-  <form id="hForm" [formGroup]="heroForm" (submit)="submit()">
+  <form id="hForm" [formGroup]="form" (submit)="submit()">
 
     <mat-form-field class="form-field" appearance="outline" floatLabel="auto">
       <mat-label>Nombre</mat-label>
@@ -30,10 +30,13 @@
       <mat-label>Url de la imagen</mat-label>
       <input matInput formControlName="imageUrl" required />
     </mat-form-field>
+
+    <div class="actions span-2">
+      <mat-checkbox formControlName="terms" required>Acepto los <a href="https://example.com">Terminos y
+          Condiciones</a></mat-checkbox>
+      <button mat-flat-button type="submit" [disabled]="form.invalid">Guardar cambios</button>
+    </div>
+
   </form>
 
 </mat-dialog-content>
-<mat-dialog-actions>
-  <mat-checkbox form="hForm" required>Acepto los Terminos y Condiciones</mat-checkbox>
-  <button form="hForm" mat-flat-button type="submit" [disabled]="!heroForm.valid">Crear héroe</button>
-</mat-dialog-actions>

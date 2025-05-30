@@ -27,16 +27,17 @@ export class InsertDialogComponent {
   constructor(public dialogRef: MatDialogRef<InsertDialogComponent>) { }
   private readonly formBuilder = inject(FormBuilder);
 
-  protected heroForm: FormGroup = this.formBuilder.group({
+  protected form: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
     location: ['', Validators.required],
     powers: ['', Validators.required],
     imageUrl: ['', Validators.required],
+    terms: [false, Validators.requiredTrue],
   });
 
   protected submit(): void {
-    const result: Hero = this.heroForm.value;
+    const result: Hero = this.form.value;
     this.dialogRef.close(result);
   }
 
