@@ -11,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button'
 import { InsertDialogComponent } from '../insert-dialog/insert-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { LoadingService } from '../../services/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -34,10 +33,8 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   private destroyed: Subject<void> = new Subject<void>;
   public heroes: WritableSignal<Hero[]> = signal([]);
-  public loading: WritableSignal<boolean> = signal(false);
   private readonly heroesService = inject(HeroesService);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly loadingService = inject(LoadingService);
   private readonly matDialog = inject(MatDialog);
   private readonly matSnack = inject(MatSnackBar);
   public searchForm: FormGroup = this.formBuilder.group({ search: [''] });
@@ -49,7 +46,6 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getHeroes();
-    this.listenToLoading();
   }
 
   public onSearchSubmit(): void {
@@ -72,34 +68,24 @@ export class HeroListComponent implements OnInit, OnDestroy {
       });
   }
 
-  private listenToLoading(): void {
-    this.loadingService.getLoadingSubject()
-      .pipe(delay(0))
-      .subscribe(load =>
-        this.loading.set(load)
-      );
-  }
-
   public openAddHeroForm(): void {
     const insertDialogRef = this.matDialog.open(InsertDialogComponent, {
-      width: '40%',
-      maxWidth: '100vw'
+      width: 'calc(100% - 2rem)',
+      maxWidth: '750px'
     });
 
     insertDialogRef.afterClosed()
       .subscribe(hero => {
-        if (this.isHero(hero)) {
+        if (this.isValidHero(hero)) {
           this.addHero(hero);
+        } else {
+          this.showError('Héroe no valido');
         }
       });
   }
 
-  private isHero(value: Hero): value is Hero {
-    if (value.name) {
-      return true;
-    } else {
-      return false;
-    }
+  private isValidHero(value: Hero): value is Hero {
+    return !!value.name;
   }
 
   private addHero(hero: Hero): void {
@@ -110,15 +96,20 @@ export class HeroListComponent implements OnInit, OnDestroy {
       });
   }
 
-  showMessage(
+  private showMessage(
     message: string,
+    isError: boolean = false,
     vertical: MatSnackBarVerticalPosition = 'top'
   ): void {
     this.matSnack.open(message, "", {
       duration: 2000,
       verticalPosition: vertical,
-      panelClass: ['success']
+      panelClass: [isError ? 'fail' : 'success']
     });
+  }
+
+  private showError(message: string): void {
+    this.showMessage(message, true);
   }
 
 }

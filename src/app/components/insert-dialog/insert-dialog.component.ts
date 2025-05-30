@@ -28,7 +28,7 @@ export class InsertDialogComponent {
   private readonly formBuilder = inject(FormBuilder);
 
   protected form: FormGroup = this.formBuilder.group({
-    name: ['', Validators.required],
+    name: ['', [Validators.required, Validators.minLength(3)]],
     description: ['', Validators.required],
     location: ['', Validators.required],
     powers: ['', Validators.required],

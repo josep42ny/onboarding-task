@@ -31,8 +31,8 @@ export class HeroCardComponent {
     }
 
     const modDialogRef = this.matDialog.open(UpdateDialogComponent, {
-      width: '30%',
-      maxWidth: '100vw',
+      width: 'calc(100% - 2rem)',
+      maxWidth: '750px',
       data: hero
     });
 
@@ -55,8 +55,8 @@ export class HeroCardComponent {
     }
 
     const delDialogRef = this.matDialog.open(DeleteDialogComponent, {
-      width: '30%',
-      maxWidth: '100vw'
+      width: 'calc(100% - 2rem)',
+      maxWidth: '500px'
     });
 
     delDialogRef.afterClosed().subscribe(confirmed => {
