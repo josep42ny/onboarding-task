@@ -1,10 +1,10 @@
-footer {
+.c-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 4rem;
 }
 
-.content {
+.c-footer {
   flex: 0 1 1440px;
   display: flex;
   flex-direction: column;
@@ -15,15 +15,15 @@ footer {
   margin: 1em;
   color: #777;
   border-top: 2px solid #e7e7e7;
-}
 
-div {
-  display: flex;
-  align-items: center;
+  &__element {
+    display: flex;
+    align-items: center;
+  }
 }
 
 @media (min-width: 600px) {
-  .content {
+  .c-footer {
     flex-direction: row;
     justify-content: space-between;
   }

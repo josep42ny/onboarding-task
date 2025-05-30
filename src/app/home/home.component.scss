@@ -1,13 +1,13 @@
-main {
+.c-main {
   margin-top: 6rem;
-}
 
-section {
-  display: flex;
-  justify-content: center;
-}
+  &__section {
+    display: flex;
+    justify-content: center;
+  }
 
-.content {
-  padding: 0 2rem;
-  flex: 0 1 1440px;
+  &__section-content {
+    padding: 0 2rem;
+    flex: 0 1 1440px;
+  }
 }

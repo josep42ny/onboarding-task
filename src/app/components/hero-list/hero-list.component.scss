@@ -1,27 +1,27 @@
-.hero-list {
+.c-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
   margin-top: 2rem;
   justify-items: center;
 }
 
-.hero-searchbar-wrapper {
+.c-header {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.c-search {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 1em;
-}
 
-.hero-searchbar {
-  flex: 1 1 auto;
-}
+  &__form {
+    flex: 1 1 auto;
+  }
 
-.hero-searchbar>* {
-  width: 100%;
-}
-
-.hero-list-heading {
-  text-align: center;
-  margin-top: 4rem;
+  &__form-bar {
+    width: 100%;
+  }
 }

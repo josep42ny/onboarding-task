@@ -1,5 +1,7 @@
-<mat-card class="card" appearance="raised">
-  <img mat-card-image src="{{heroInfo()?.imageUrl}}" alt="Photo of a superhero">
+<mat-card class="c-card" appearance="raised">
+
+  <img mat-card-image class="c-card__image" src="{{heroInfo()?.imageUrl}}" alt="Photo of a superhero">
+
   <mat-card-header>
     <mat-card-title>
       {{heroInfo()?.name}}
@@ -8,12 +10,16 @@
       {{heroInfo()?.powers}}
     </mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    <p>{{heroInfo()?.description}}</p>
-    <button mat-button class="location" disabled><mat-icon>location_on</mat-icon> {{heroInfo()?.location}}</button>
+
+  <mat-card-content class="c-card__content">
+    <p class="c-card__content-description">{{heroInfo()?.description}}</p>
+    <button mat-button class="c-card__content-loacion" disabled><mat-icon>location_on</mat-icon>
+      {{heroInfo()?.location}}</button>
   </mat-card-content>
+
   <mat-card-actions align="end">
     <button mat-button (click)="openDeleteHeroForm(heroInfo())">Eliminar</button>
     <button mat-flat-button (click)="openEditHeroForm(heroInfo())"><mat-icon>edit</mat-icon> Editar</button>
   </mat-card-actions>
+
 </mat-card>

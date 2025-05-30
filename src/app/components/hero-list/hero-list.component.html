@@ -1,6 +1,6 @@
-<div class="hero-searchbar-wrapper">
-  <form [formGroup]="searchForm" (submit)="onSearchSubmit()" class="hero-searchbar">
-    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+<div class="c-search">
+  <form class="c-search__form" [formGroup]="searchForm" (submit)="onSearchSubmit()">
+    <mat-form-field class="c-search__form-bar" subscriptSizing="dynamic" appearance="outline">
       <mat-label>Busca un héroe</mat-label>
       <input matInput type="search" placeholder="Busca un héroe" formControlName="search">
       <button matSuffix mat-icon-button type="submit">
@@ -12,18 +12,16 @@
   <button mat-flat-button (click)="openAddHeroForm()"><mat-icon>add</mat-icon>Crear nuevo héroe</button>
 </div>
 
-<div class="hero-list-heading">
+<div class="c-header">
   <h1>Héroes más allá de la imaginación</h1>
   <p>Desd tiempos inmemoriales, la humanidad ha soñado con figuras extraordinarias <br> capaces de desafiar los límities
     de la realidad. </p>
 </div>
 
-<div class="hero-list">
-  @if (heroes().length === 0) {
-  <div>No se han encontrado heroes</div>
-  } @else {
+<div class="c-grid">
   @for (hero of heroes(); track hero.id) {
   <app-hero-card (onCardChange)="getHeroes()" [heroInfo]="hero" />
-  }
+  } @empty {
+  <div>No se han encontrado heroes</div>
   }
 </div>
