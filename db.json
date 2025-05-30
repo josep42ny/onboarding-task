@@ -22,7 +22,7 @@
       "description": "A cybernetic warrior with unmatched strength and an indestructible arm.",
       "location": "Steel Haven",
       "powers": "Super",
-      "imageUrl": "https://picsum.photos/seed/4/400/300"
+      "imageUrl": "https://picsum.photos/seed/3/400/300"
     },
     {
       "id": 4,
@@ -30,7 +30,31 @@
       "description": "A powerful sorceress who wields ancient magic to protect the world from dark forces.",
       "location": "Arcane Valley",
       "powers": "Spellcasting",
+      "imageUrl": "https://picsum.photos/seed/4/400/300"
+    },
+    {
+      "id": 5,
+      "name": "Captain Blaze",
+      "description": "A fearless hero who commands the power of fire and heat.",
+      "location": "Volcanic Ridge",
+      "powers": "Pyrokinesis",
       "imageUrl": "https://picsum.photos/seed/5/400/300"
+    },
+    {
+      "id": 6,
+      "name": "Shadow Viper",
+      "description": "A stealthy vigilante who strikes from the darkness with lightning speed.",
+      "location": "Neo City",
+      "powers": "Invisibility",
+      "imageUrl": "https://picsum.photos/seed/6/400/300"
+    },
+    {
+      "id": 7,
+      "name": "Titanium Fist",
+      "description": "A cybernetic warrior with unmatched strength and an indestructible arm.",
+      "location": "Steel Haven",
+      "powers": "Super",
+      "imageUrl": "https://picsum.photos/seed/7/400/300"
     }
   ]
 }

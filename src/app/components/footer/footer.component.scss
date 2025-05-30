@@ -1,22 +1,30 @@
 footer {
-
   display: flex;
   justify-content: center;
   margin-top: 4rem;
+}
 
+.content {
+  flex: 0 1 1440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  padding: 2rem 0.5rem 4rem;
+  margin: 1em;
+  color: #777;
+  border-top: 2px solid #e7e7e7;
+}
+
+div {
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 600px) {
   .content {
-    flex: 0 1 1440px;
-    display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    color: #777;
-    padding: 2rem 0.5rem 4rem;
-    border-top: 2px solid #e7e7e7;
   }
-
-  div {
-    display: flex;
-    align-items: center;
-  }
-
 }
