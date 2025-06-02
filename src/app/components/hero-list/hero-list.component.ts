@@ -13,6 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AddEditComponent } from '../add-edit/add-edit.component';
+import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
 
 @Component({
   selector: 'app-hero-list',
@@ -24,7 +26,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AddEditComponent,
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
@@ -69,19 +72,20 @@ export class HeroListComponent implements OnInit, OnDestroy {
   }
 
   public openAddHeroForm(): void {
-    const insertDialogRef = this.matDialog.open(InsertDialogComponent, {
-      width: 'calc(100% - 2rem)',
-      maxWidth: '750px'
-    });
+    //this.test.openAdd();
+    // const insertDialogRef = this.matDialog.open(InsertDialogComponent, {
+    //   width: 'calc(100% - 2rem)',
+    //   maxWidth: '750px'
+    // });
 
-    insertDialogRef.afterClosed()
-      .subscribe(hero => {
-        if (this.isValidHero(hero)) {
-          this.addHero(hero);
-        } else {
-          this.showError('Héroe no valido');
-        }
-      });
+    // insertDialogRef.afterClosed()
+    //   .subscribe(hero => {
+    //     if (this.isValidHero(hero)) {
+    //       this.addHero(hero);
+    //     } else {
+    //       this.showError('Héroe no valido');
+    //     }
+    //   });
   }
 
   private isValidHero(value: Hero): value is Hero {

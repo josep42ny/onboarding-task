@@ -1,0 +1,59 @@
+<div mat-dialog-title class="c-title">
+  <h4>Editar héroe</h4>
+  <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+</div>
+
+<mat-dialog-content>
+  <form class="c-form" [formGroup]="form" (submit)="submit()">
+
+    <mat-form-field class="c-form__field" appearance="outline" floatLabel="auto">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" required />
+      @if (form.get('name')?.hasError('required')) {
+      <mat-error>Rellena este campo para continuar</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="c-form__field" appearance="outline" floatLabel="auto">
+      <mat-label>Superpoder</mat-label>
+      <input matInput formControlName="powers" required />
+      @if (form.get('powers')?.hasError('required')) {
+      <mat-error>Rellena este campo para continuar</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="c-form__field--full-width" appearance="outline" floatLabel="auto">
+      <mat-label>Ciudad</mat-label>
+      <input matInput formControlName="location" required />
+      @if (form.get('location')?.hasError('required')) {
+      <mat-error>Rellena este campo para continuar</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="c-form__field--full-width" appearance="outline" floatLabel="auto">
+      <mat-label>Descripcción</mat-label>
+      <textarea matInput formControlName="description" required></textarea>
+      @if (form.get('description')?.hasError('required')) {
+      <mat-error>Rellena este campo para continuar</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="c-form__field--full-width" appearance="outline" floatLabel="auto">
+      <mat-label>Url de la imagen</mat-label>
+      <input matInput formControlName="imageUrl" required />
+      @if (form.get('imageUrl')?.hasError('required')) {
+      <mat-error>Rellena este campo para continuar</mat-error>
+      } @else if (form.get('imageUrl')?.hasError('pattern')) {
+      <mat-error>Rellena este campo con una url válida</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="c-form__actions c-form__actions--full-width">
+      <mat-checkbox formControlName="terms" required>Acepto los <a href="https://example.com">Terminos y
+          Condiciones</a></mat-checkbox>
+      <button mat-flat-button type="submit" [disabled]="form.invalid">Guardar cambios</button>
+    </div>
+
+  </form>
+
+</mat-dialog-content>
