@@ -31,18 +31,17 @@ export class UpdateDialogComponent implements OnInit {
   private readonly heroesService = inject(HeroesService);
   private urlRegex: RegExp = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
-  public form = this.formBuilder.group({
-    id: [-1, Validators.required],
-    name: ['', Validators.required],
-    description: ['', Validators.required],
-    location: ['', Validators.required],
-    powers: ['', Validators.required],
-    imageUrl: ['', [Validators.required, Validators.pattern(this.urlRegex)]],
-    terms: [false, Validators.requiredTrue],
+  public form = this.formBuilder.nonNullable.group({
+    id: [{ value: -1, disabled: true }, Validators.required],
+    name: [{ value: '', disabled: true }, Validators.required],
+    description: [{ value: '', disabled: true }, Validators.required],
+    location: [{ value: '', disabled: true }, Validators.required],
+    powers: [{ value: '', disabled: true }, Validators.required],
+    imageUrl: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(this.urlRegex)]],
+    terms: [{ value: false, disabled: true }, Validators.requiredTrue],
   });
 
   ngOnInit(): void {
-    console.log(this.selectedHero.id);
     this.heroesService.getHero(this.selectedHero.id)
       .subscribe(hero => {
         this.form.setValue({
@@ -54,11 +53,14 @@ export class UpdateDialogComponent implements OnInit {
           imageUrl: hero.imageUrl,
           terms: false,
         });
+        this.form.enable();
       });
   }
 
   protected submit(): void {
-    this.dialogRef.close(this.form.value);
+    const result: any = this.form.value;
+    delete result.terms;
+    this.dialogRef.close(result as Hero);
   }
 
 }

@@ -55,6 +55,14 @@
       "location": "Steel Haven",
       "powers": "Super",
       "imageUrl": "https://picsum.photos/seed/7/400/300"
+    },
+    {
+      "id": 8,
+      "name": "s",
+      "description": "saasda",
+      "location": "sasda",
+      "powers": "s",
+      "imageUrl": "https://picsum.photos/seed/4/400/300"
     }
   ]
 }

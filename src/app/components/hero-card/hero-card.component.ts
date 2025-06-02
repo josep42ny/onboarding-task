@@ -24,16 +24,12 @@ export class HeroCardComponent {
   public heroInfo = input<Hero>();
   public onCardChange = output<void>();
 
-  public openEditHeroForm(hero: Hero | undefined): void {
-
-    if (hero === undefined) {
-      return;
-    }
+  public openEditHeroForm(): void {
 
     const modDialogRef = this.matDialog.open(UpdateDialogComponent, {
       width: 'calc(100% - 2rem)',
       maxWidth: '750px',
-      data: hero
+      data: this.heroInfo
     });
 
     modDialogRef.afterClosed().subscribe(hero => {
@@ -48,11 +44,7 @@ export class HeroCardComponent {
 
   }
 
-  public openDeleteHeroForm(hero: Hero | undefined): void {
-
-    if (hero === undefined) {
-      return;
-    }
+  public openDeleteHeroForm(): void {
 
     const delDialogRef = this.matDialog.open(DeleteDialogComponent, {
       width: 'calc(100% - 2rem)',
@@ -61,7 +53,8 @@ export class HeroCardComponent {
 
     delDialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.heroesService.deleteHero(hero.id).subscribe(data => {
+        // todo check undefined id
+        this.heroesService.deleteHero(this.heroInfo()?.id ?? -1).subscribe(data => {
           this.onCardChange.emit();
           this.showMessage("Este héroe se ha eliminado");
         });

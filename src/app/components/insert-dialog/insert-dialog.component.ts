@@ -28,7 +28,7 @@ export class InsertDialogComponent {
   private readonly formBuilder = inject(FormBuilder);
   private urlRegex: RegExp = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
-  protected form: FormGroup = this.formBuilder.group({
+  protected form: FormGroup = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
     location: ['', Validators.required],
@@ -38,8 +38,9 @@ export class InsertDialogComponent {
   });
 
   protected submit(): void {
-    const result: Hero = this.form.value;
-    this.dialogRef.close(result);
+    const result: any = this.form.value;
+    delete result.terms;
+    this.dialogRef.close(result as Hero);
   }
 
 }
