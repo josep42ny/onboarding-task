@@ -1,10 +1,10 @@
 import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
-import { Component, EventEmitter, inject, input, output, Output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HeroesService } from '../../services/heroes.service';
 import { MatChipsModule } from '@angular/material/chips';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
@@ -26,17 +26,17 @@ export class HeroCardComponent {
 
   public openEditHeroForm(): void {
 
-    const modDialogRef = this.matDialog.open(UpdateDialogComponent, {
+    const modDialogRef: MatDialogRef<UpdateDialogComponent> = this.matDialog.open(UpdateDialogComponent, {
       width: 'calc(100% - 2rem)',
       maxWidth: '750px',
       data: this.heroInfo
     });
 
-    modDialogRef.afterClosed().subscribe(hero => {
+    modDialogRef.afterClosed().subscribe((hero: Hero) => {
       if (!hero) {
         return;
       }
-      this.heroesService.updateHero(hero).subscribe(data => {
+      this.heroesService.updateHero(hero).subscribe(() => {
         this.onCardChange.emit();
         this.showMessage("Héroe modificado con éxito");
       });
@@ -46,15 +46,15 @@ export class HeroCardComponent {
 
   public openDeleteHeroForm(): void {
 
-    const delDialogRef = this.matDialog.open(DeleteDialogComponent, {
+    const delDialogRef: MatDialogRef<DeleteDialogComponent> = this.matDialog.open(DeleteDialogComponent, {
       width: 'calc(100% - 2rem)',
       maxWidth: '500px'
     });
 
-    delDialogRef.afterClosed().subscribe(confirmed => {
+    delDialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         // todo check undefined id
-        this.heroesService.deleteHero(this.heroInfo()?.id ?? -1).subscribe(data => {
+        this.heroesService.deleteHero(this.heroInfo()?.id ?? -1).subscribe(() => {
           this.onCardChange.emit();
           this.showMessage("Este héroe se ha eliminado");
         });
