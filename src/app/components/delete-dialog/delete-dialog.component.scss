@@ -1,21 +1,21 @@
-.dialog-title,
-mat-dialog-actions {
+.c-title,
+.c-actions {
   display: flex;
   align-items: center;
 }
 
 
-.dialog-title {
+.c-title {
   justify-content: space-between;
 }
 
-mat-dialog-actions {
+.c-actions {
   justify-content: flex-end;
 }
 
-.hero-delete {
+.c-warning {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0 2em;
+  gap: 0 2rem;
 }
