@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
 import { HeroesService } from '../../services/heroes.service';
 import { catchError, delay, retry, Subject, takeUntil, throwError } from 'rxjs';
@@ -8,13 +8,11 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
-import { InsertDialogComponent } from '../insert-dialog/insert-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AddEditComponent } from '../add-edit/add-edit.component';
-import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TestwomboService } from '../../services/testwombo.service';
 
 @Component({
   selector: 'app-hero-list',
@@ -27,25 +25,19 @@ import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.compo
     MatButtonModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
-    AddEditComponent,
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
 })
-export class HeroListComponent implements OnInit, OnDestroy {
+export class HeroListComponent implements OnInit {
 
-  private destroyed: Subject<void> = new Subject<void>;
   public heroes: WritableSignal<Hero[]> = signal([]);
   private readonly heroesService = inject(HeroesService);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly matDialog = inject(MatDialog);
-  private readonly matSnack = inject(MatSnackBar);
+  private readonly infoBar = inject(MatSnackBar);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly insertionService = inject(TestwomboService);
   public searchForm: FormGroup = this.formBuilder.group({ search: [''] });
-
-  ngOnDestroy(): void {
-    this.destroyed.next();
-    this.destroyed.complete();
-  }
 
   ngOnInit(): void {
     this.getHeroes();
@@ -64,7 +56,7 @@ export class HeroListComponent implements OnInit, OnDestroy {
           console.error('Unable to deliver after retries:', error);
           return throwError(() => new Error('We could not handle your request'))
         }),
-        takeUntil(this.destroyed)
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((data: Hero[]) => {
         this.heroes.set(data);
@@ -72,20 +64,13 @@ export class HeroListComponent implements OnInit, OnDestroy {
   }
 
   public openAddHeroForm(): void {
-    //this.test.openAdd();
-    // const insertDialogRef = this.matDialog.open(InsertDialogComponent, {
-    //   width: 'calc(100% - 2rem)',
-    //   maxWidth: '750px'
-    // });
-
-    // insertDialogRef.afterClosed()
-    //   .subscribe(hero => {
-    //     if (this.isValidHero(hero)) {
-    //       this.addHero(hero);
-    //     } else {
-    //       this.showError('Héroe no valido');
-    //     }
-    //   });
+    this.insertionService.openAdd()
+      .subscribe((success: boolean) => {
+        const message: string = success ? "Héroe creado con éxito" : "Héroe creado con no éxito";
+        this.getHeroes();
+        this.showMessage(message);
+      }
+      );
   }
 
   private isValidHero(value: Hero): value is Hero {
@@ -100,14 +85,15 @@ export class HeroListComponent implements OnInit, OnDestroy {
       });
   }
 
+
   private showMessage(
     message: string,
     isError: boolean = false,
-    vertical: MatSnackBarVerticalPosition = 'top'
+    verticalPosition: MatSnackBarVerticalPosition = 'top'
   ): void {
-    this.matSnack.open(message, "", {
+    this.infoBar.open(message, "", {
       duration: 2000,
-      verticalPosition: vertical,
+      verticalPosition: verticalPosition,
       panelClass: [isError ? 'fail' : 'success']
     });
   }

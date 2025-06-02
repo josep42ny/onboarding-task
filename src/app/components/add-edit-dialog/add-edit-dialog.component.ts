@@ -1,10 +1,12 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { Hero } from '../../interfaces/hero';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-add-edit-dialog',
@@ -14,6 +16,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
+    MatInputModule,
+    MatCheckboxModule
   ],
   templateUrl: './add-edit-dialog.component.html',
   styleUrl: './add-edit-dialog.component.scss'
@@ -21,7 +25,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 export class AddEditDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddEditDialogComponent>) { }
-  public hero = input<Hero>();
+  private readonly data: Hero = inject<Hero>(MAT_DIALOG_DATA);
+  protected isEditing = computed<boolean>(() => !(this.data === undefined));
   private readonly formBuilder = inject(FormBuilder);
   private readonly urlRegex: RegExp = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
   public form = this.formBuilder.nonNullable.group({
@@ -35,20 +40,23 @@ export class AddEditDialogComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // if hero is null, then the form is inserting a new hero, not editing one
-    const h: any = this.hero() ?? {
-      name: '',
-      description: '',
-      location: '',
-      powers: '',
-      imageUrl: '',
-    };
-    this.form.setValue(h);
+    if (this.isEditing()) {
+      this.form.setValue({
+        id: this.data.id,
+        name: this.data.name,
+        description: this.data.description,
+        location: this.data.location,
+        powers: this.data.powers,
+        imageUrl: this.data.imageUrl,
+        terms: false,
+      });
+    }
     this.form.enable();
   }
 
   protected submit(): void {
     const result: any = this.form.value;
+    this.isEditing() ? '' : delete result.id;
     delete result.terms;
     this.dialogRef.close(result as Hero);
   }
