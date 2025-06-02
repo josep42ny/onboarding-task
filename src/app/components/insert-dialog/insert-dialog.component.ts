@@ -26,13 +26,14 @@ export class InsertDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<InsertDialogComponent>) { }
   private readonly formBuilder = inject(FormBuilder);
+  private urlRegex: RegExp = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
   protected form: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
+    name: ['', Validators.required],
     description: ['', Validators.required],
     location: ['', Validators.required],
     powers: ['', Validators.required],
-    imageUrl: ['', Validators.required],
+    imageUrl: ['', [Validators.required, Validators.pattern(this.urlRegex)]],
     terms: [false, Validators.requiredTrue],
   });
 

@@ -29,6 +29,7 @@ export class UpdateDialogComponent implements OnInit {
   private readonly dialogRef = inject(MatDialogRef);
   private readonly formBuilder = inject(FormBuilder);
   private readonly heroesService = inject(HeroesService);
+  private urlRegex: RegExp = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
   public form = this.formBuilder.group({
     id: [-1, Validators.required],
@@ -36,7 +37,7 @@ export class UpdateDialogComponent implements OnInit {
     description: ['', Validators.required],
     location: ['', Validators.required],
     powers: ['', Validators.required],
-    imageUrl: ['', Validators.required],
+    imageUrl: ['', [Validators.required, Validators.pattern(this.urlRegex)]],
     terms: [false, Validators.requiredTrue],
   });
 
