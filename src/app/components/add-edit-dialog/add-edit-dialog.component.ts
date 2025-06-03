@@ -56,7 +56,9 @@ export class AddEditDialogComponent implements OnInit {
 
   protected submit(): void {
     const result: any = this.form.value;
-    this.isEditing() ? '' : delete result.id;
+    if (!this.isEditing()) {
+      delete result.id;
+    }
     delete result.terms;
     this.dialogRef.close(result as Hero);
   }

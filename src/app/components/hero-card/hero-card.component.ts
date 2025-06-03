@@ -21,31 +21,11 @@ export class HeroCardComponent {
   private readonly matDialog = inject(MatDialog);
   private readonly matSnack = inject(MatSnackBar);
   private readonly heroesService = inject(HeroesService);
-  public heroInfo = input<Hero>();
+  public heroInfo = input.required<Hero>();
   public onCardChange = output<void>();
-
-  public openEditHeroForm(): void {
-
-    const modDialogRef = this.matDialog.open(UpdateDialogComponent, {
-      width: 'calc(100% - 2rem)',
-      maxWidth: '750px',
-      data: this.heroInfo
-    });
-
-    modDialogRef.afterClosed().subscribe(hero => {
-      if (!hero) {
-        return;
-      }
-      this.heroesService.updateHero(hero).subscribe(data => {
-        this.onCardChange.emit();
-        this.showMessage("Héroe modificado con éxito");
-      });
-    });
-
-  }
+  public onEdit = output<Hero>();
 
   public openDeleteHeroForm(): void {
-
     const delDialogRef = this.matDialog.open(DeleteDialogComponent, {
       width: 'calc(100% - 2rem)',
       maxWidth: '500px'
@@ -53,14 +33,12 @@ export class HeroCardComponent {
 
     delDialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        // todo check undefined id
         this.heroesService.deleteHero(this.heroInfo()?.id ?? -1).subscribe(data => {
           this.onCardChange.emit();
           this.showMessage("Este héroe se ha eliminado");
         });
       }
     });
-
   }
 
   showMessage(
@@ -72,6 +50,10 @@ export class HeroCardComponent {
       verticalPosition: vertical,
       panelClass: ['success']
     });
+  }
+
+  protected openEditHeroForm() {
+    this.onEdit.emit(this.heroInfo())
   }
 
 }

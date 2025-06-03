@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnDestroy, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
 import { HeroesService } from '../../services/heroes.service';
-import { catchError, delay, retry, Subject, takeUntil, throwError } from 'rxjs';
+import { catchError, retry, throwError } from 'rxjs';
 import { HeroCardComponent } from '../hero-card/hero-card.component';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -12,7 +12,8 @@ import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snac
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TestwomboService } from '../../services/testwombo.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
 
 @Component({
   selector: 'app-hero-list',
@@ -32,11 +33,11 @@ import { TestwomboService } from '../../services/testwombo.service';
 export class HeroListComponent implements OnInit {
 
   public heroes: WritableSignal<Hero[]> = signal([]);
-  private readonly heroesService = inject(HeroesService);
+  private readonly httpService = inject(HeroesService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly infoBar = inject(MatSnackBar);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly insertionService = inject(TestwomboService);
+  private readonly dialog = inject(MatDialog);
   public searchForm: FormGroup = this.formBuilder.group({ search: [''] });
 
   ngOnInit(): void {
@@ -49,42 +50,57 @@ export class HeroListComponent implements OnInit {
   }
 
   public getHeroes(searchByName: string = ''): void {
-    this.heroesService.getHeroes(searchByName)
+    this.httpService.getHeroes(searchByName)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         retry(2),
         catchError(error => {
           console.error('Unable to deliver after retries:', error);
           return throwError(() => new Error('We could not handle your request'))
-        }),
-        takeUntilDestroyed(this.destroyRef)
+        })
       )
       .subscribe((data: Hero[]) => {
         this.heroes.set(data);
       });
   }
 
-  public openAddHeroForm(): void {
-    this.insertionService.openAdd()
-      .subscribe((success: boolean) => {
-        const message: string = success ? "Héroe creado con éxito" : "Héroe creado con no éxito";
-        this.getHeroes();
-        this.showMessage(message);
-      }
-      );
-  }
 
-  private isValidHero(value: Hero): value is Hero {
-    return !!value.name;
-  }
+  public open({ }): void;
+  public open(opts: { hero: Hero }): void {
+    const isAdding: boolean = (opts.hero === undefined);
 
-  private addHero(hero: Hero): void {
-    this.heroesService.addHero(hero)
-      .subscribe(_ => {
-        this.getHeroes();
-        this.showMessage("Héroe creado con éxito");
+    const dialogRef = this.dialog.open(AddEditDialogComponent, {
+      width: 'calc(100% - 2rem)',
+      maxWidth: '750px',
+      data: opts.hero,
+    });
+
+    dialogRef.afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(hero => {
+        if (hero === undefined) {
+          return;
+        }
+
+        if (isAdding) {
+          this.httpService.addHero(hero)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.getHeroes());
+        } else {
+          this.httpService.updateHero(hero)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.getHeroes());
+        }
       });
   }
 
+  public openAddDialog(): void {
+    this.open({});
+  };
+
+  public openEditDialog(hero: Hero): void {
+    this.open({ hero: hero });
+  };
 
   private showMessage(
     message: string,
