@@ -1,6 +1,7 @@
+@use '../../styles/mixins' as *;
+
 .c-card {
-  display: flex;
-  flex-direction: column;
+  @include flex(column);
   margin: 1rem;
   width: 300px;
   min-height: 450px;

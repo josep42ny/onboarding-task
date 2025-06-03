@@ -1,40 +1,63 @@
 import type { Hero } from '../../interfaces/hero';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HeroCardComponent } from './hero-card.component';
+import { Component, ViewChild } from '@angular/core';
+
+const TEST_ID: number = 420;
+
+@Component({
+  template:
+    `
+    <app-hero-card (onDelete)="openDeleteDialog($event)" (onEdit)="openEditDialog($event)"
+    [heroInfo]="sampleHero" />
+  `
+})
+class HostCompoent {
+
+  @ViewChild(HeroCardComponent) heroCardComponent!: HeroCardComponent;
+  public sampleHero: Hero = {
+    id: TEST_ID,
+    name: '',
+    powers: '',
+    description: '',
+    location: '',
+    imageUrl: '',
+  }
+  public emittedId: number = 0;
+  public emittedHero: Object = {};
+
+  openEditDialog(hero: Hero) {
+    this.emittedHero = hero;
+  }
+
+  openDeleteDialog(id: number) {
+    this.emittedId = id;
+  }
+
+}
 
 describe('HeroCardComponent', () => {
-  let component: HeroCardComponent;
-  let fixture: ComponentFixture<HeroCardComponent>;
+  let hostComponent: HostCompoent;
+  let hostFixture: ComponentFixture<HostCompoent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeroCardComponent]
+      imports: [HeroCardComponent, HostCompoent],
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(HeroCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    hostFixture = TestBed.createComponent(HostCompoent);
+    hostComponent = hostFixture.componentInstance;
+    hostFixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('creates', () => {
+    expect(hostComponent.heroCardComponent).toBeTruthy();
   });
 
-  it('should start with a hero object', () => {
-    expect(component.heroInfo()).toBeTruthy();
-  })
+  it('outputs id when clicking delete', () => {
+    hostComponent.heroCardComponent.openEditHeroForm();
+    expect(hostComponent.emittedId).toBe(TEST_ID);
+  });
 
-  it('input object should conform to hero interface', () => {
-    const sampleHero: Hero = {
-      id: 0,
-      name: '',
-      powers: '',
-      description: '',
-      location: '',
-      imageUrl: '',
-    }
-    expect(component.heroInfo()).toBeInstanceOf<Hero>(sampleHero);
-  })
 });
