@@ -1,4 +1,5 @@
-import { HttpEventType, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import type { HttpHandlerFn, HttpInterceptorFn } from '@angular/common/http';
+import { HttpEventType, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { LoadingService } from '../services/loading.service';
 import { tap } from 'rxjs';

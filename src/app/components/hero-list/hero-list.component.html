@@ -9,7 +9,7 @@
     </mat-form-field>
   </form>
 
-  <button mat-flat-button (click)="openAddHeroForm()"><mat-icon>add</mat-icon>Crear nuevo héroe</button>
+  <button mat-flat-button (click)="openAddDialog()"><mat-icon>add</mat-icon>Crear nuevo héroe</button>
 </div>
 
 <div class="c-header">
@@ -20,8 +20,12 @@
 
 <div class="c-grid">
   @for (hero of heroes(); track hero.id) {
-  <app-hero-card (onCardChange)="getHeroes()" [heroInfo]="hero" />
+  <app-hero-card (onDelete)="openDeleteDialog($event)" (onEdit)="openEditDialog($event)" (onCardChange)="getHeroes()"
+    [heroInfo]="hero" />
   } @empty {
-  <div>No se han encontrado heroes</div>
+  <div class="c-not-found">
+    <mat-icon class="c-not-found__icon">question_mark</mat-icon>
+    <div>No se han encontrado heroes</div>
+  </div>
   }
 </div>

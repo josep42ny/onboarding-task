@@ -1,0 +1,24 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { AddEditDialogComponent } from './add-edit-dialog.component';
+import { provideRouter } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
+
+describe('AddEditDialogComponent', () => {
+  let component: AddEditDialogComponent;
+  let fixture: ComponentFixture<AddEditDialogComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AddEditDialogComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AddEditDialogComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

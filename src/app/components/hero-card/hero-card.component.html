@@ -1,20 +1,20 @@
 <mat-card class="c-card" appearance="raised">
 
-  <img mat-card-image class="c-card__image" src="{{heroInfo()?.imageUrl}}" alt="Photo of a superhero">
+  <img mat-card-image class="c-card__image" src="{{heroInfo().imageUrl}}" alt="Photo of a superhero">
 
   <mat-card-header>
     <mat-card-title>
-      {{heroInfo()?.name}}
+      {{heroInfo().name}}
     </mat-card-title>
     <mat-card-subtitle>
-      {{heroInfo()?.powers}}
+      {{heroInfo().powers}}
     </mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content class="c-card__content">
-    <p class="c-card__content-description">{{heroInfo()?.description}}</p>
+    <p class="c-card__content-description">{{heroInfo().description}}</p>
     <button mat-button class="c-card__content-loacion" disabled><mat-icon>location_on</mat-icon>
-      {{heroInfo()?.location}}</button>
+      {{heroInfo().location}}</button>
   </mat-card-content>
 
   <mat-card-actions align="end">

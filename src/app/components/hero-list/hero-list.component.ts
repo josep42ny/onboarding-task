@@ -1,18 +1,22 @@
-import { Component, inject, OnDestroy, OnInit, Signal, signal, WritableSignal } from '@angular/core';
-import { Hero } from '../../interfaces/hero';
+import type { MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import type { OnInit, WritableSignal } from '@angular/core';
+import type { Hero } from '../../interfaces/hero';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HeroesService } from '../../services/heroes.service';
-import { catchError, delay, retry, Subject, takeUntil, throwError } from 'rxjs';
+import { catchError, retry, throwError } from 'rxjs';
 import { HeroCardComponent } from '../hero-card/hero-card.component';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
-import { InsertDialogComponent } from '../insert-dialog/insert-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-hero-list',
@@ -24,25 +28,20 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
 })
-export class HeroListComponent implements OnInit, OnDestroy {
+export class HeroListComponent implements OnInit {
 
-  private destroyed: Subject<void> = new Subject<void>;
   public heroes: WritableSignal<Hero[]> = signal([]);
-  private readonly heroesService = inject(HeroesService);
+  private readonly httpService = inject(HeroesService);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly matDialog = inject(MatDialog);
-  private readonly matSnack = inject(MatSnackBar);
+  private readonly infoBar = inject(MatSnackBar);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly dialog = inject(MatDialog);
   public searchForm: FormGroup = this.formBuilder.group({ search: [''] });
-
-  ngOnDestroy(): void {
-    this.destroyed.next();
-    this.destroyed.complete();
-  }
 
   ngOnInit(): void {
     this.getHeroes();
@@ -54,56 +53,91 @@ export class HeroListComponent implements OnInit, OnDestroy {
   }
 
   public getHeroes(searchByName: string = ''): void {
-    this.heroesService.getHeroes(searchByName)
+    this.httpService.getHeroes(searchByName)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         retry(2),
         catchError(error => {
           console.error('Unable to deliver after retries:', error);
           return throwError(() => new Error('We could not handle your request'))
-        }),
-        takeUntil(this.destroyed)
+        })
       )
       .subscribe((data: Hero[]) => {
         this.heroes.set(data);
       });
   }
 
-  public openAddHeroForm(): void {
-    const insertDialogRef = this.matDialog.open(InsertDialogComponent, {
+
+  public open({ }): void;
+  public open(opts: { hero: Hero }): void {
+    const isAdding: boolean = (opts.hero === undefined);
+
+    const dialogRef = this.dialog.open(AddEditDialogComponent, {
       width: 'calc(100% - 2rem)',
-      maxWidth: '750px'
+      maxWidth: '750px',
+      data: opts.hero,
     });
 
-    insertDialogRef.afterClosed()
+    dialogRef.afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(hero => {
-        if (this.isValidHero(hero)) {
-          this.addHero(hero);
+        if (hero === undefined) {
+          return;
+        }
+
+        if (isAdding) {
+          this.httpService.addHero(hero)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+              this.getHeroes()
+              this.showMessage("Héroe modificado con éxito");
+            });
         } else {
-          this.showError('Héroe no valido');
+          this.httpService.updateHero(hero)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+              this.getHeroes()
+              this.showMessage("Héroe creado con éxito");
+            });
         }
       });
   }
 
-  private isValidHero(value: Hero): value is Hero {
-    return !!value.name;
-  }
+  public openAddDialog(): void {
+    this.open({});
+  };
 
-  private addHero(hero: Hero): void {
-    this.heroesService.addHero(hero)
-      .subscribe(_ => {
-        this.getHeroes();
-        this.showMessage("Héroe creado con éxito");
-      });
+  public openEditDialog(hero: Hero): void {
+    this.open({ hero: hero });
+  };
+
+  public openDeleteDialog(heroId: number): void {
+    const delDialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: 'calc(100% - 2rem)',
+      maxWidth: '500px'
+    });
+
+    delDialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) {
+        return;
+      }
+      this.httpService.deleteHero(heroId)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.getHeroes();
+          this.showMessage("Este héroe se ha eliminado");
+        });
+    });
   }
 
   private showMessage(
     message: string,
     isError: boolean = false,
-    vertical: MatSnackBarVerticalPosition = 'top'
+    verticalPosition: MatSnackBarVerticalPosition = 'top'
   ): void {
-    this.matSnack.open(message, "", {
+    this.infoBar.open(message, "", {
       duration: 2000,
-      verticalPosition: vertical,
+      verticalPosition: verticalPosition,
       panelClass: [isError ? 'fail' : 'success']
     });
   }

@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import type { OnInit, WritableSignal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './home/home.component';

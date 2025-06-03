@@ -1,5 +1,9 @@
 <div mat-dialog-title class="c-title">
+  @if (isEditing()) {
   <h4>Editar héroe</h4>
+  } @else {
+  <h4>Crear nuevo héroe</h4>
+  }
   <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
 </div>
 

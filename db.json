@@ -25,14 +25,6 @@
       "imageUrl": "https://picsum.photos/seed/3/400/300"
     },
     {
-      "id": 4,
-      "name": "Mystica",
-      "description": "A powerful sorceress who wields ancient magic to protect the world from dark forces.",
-      "location": "Arcane Valley",
-      "powers": "Spellcasting",
-      "imageUrl": "https://picsum.photos/seed/4/400/300"
-    },
-    {
       "id": 5,
       "name": "Captain Blaze",
       "description": "A fearless hero who commands the power of fire and heat.",
@@ -55,14 +47,6 @@
       "location": "Steel Haven",
       "powers": "Super",
       "imageUrl": "https://picsum.photos/seed/7/400/300"
-    },
-    {
-      "id": 8,
-      "name": "s",
-      "description": "saasda",
-      "location": "sasda",
-      "powers": "s",
-      "imageUrl": "https://picsum.photos/seed/4/400/300"
     }
   ]
 }
