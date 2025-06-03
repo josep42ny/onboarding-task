@@ -25,3 +25,14 @@
     width: 100%;
   }
 }
+
+.c-not-found {
+  text-align: center;
+
+  &__icon {
+    width: 8rem;
+    height: 8rem;
+    font-size: 8rem;
+    color: #aaa;
+  }
+}

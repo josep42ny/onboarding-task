@@ -20,8 +20,12 @@
 
 <div class="c-grid">
   @for (hero of heroes(); track hero.id) {
-  <app-hero-card (onEdit)="openEditDialog($event)" (onCardChange)="getHeroes()" [heroInfo]="hero" />
+  <app-hero-card (onDelete)="openDeleteDialog($event)" (onEdit)="openEditDialog($event)" (onCardChange)="getHeroes()"
+    [heroInfo]="hero" />
   } @empty {
-  <div>No se han encontrado heroes</div>
+  <div class="c-not-found">
+    <mat-icon class="c-not-found__icon">question_mark</mat-icon>
+    <div>No se han encontrado heroes</div>
+  </div>
   }
 </div>

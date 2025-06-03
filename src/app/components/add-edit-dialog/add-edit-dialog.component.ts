@@ -1,9 +1,10 @@
-import { Component, computed, inject, input, OnInit } from '@angular/core';
+import type { Hero } from '../../interfaces/hero';
+import type { OnInit } from '@angular/core';
+import { Component, computed, inject, } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { Hero } from '../../interfaces/hero';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -51,6 +52,7 @@ export class AddEditDialogComponent implements OnInit {
         terms: false,
       });
     }
+
     this.form.enable();
   }
 

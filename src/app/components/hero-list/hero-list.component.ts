@@ -1,5 +1,8 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit, Signal, signal, WritableSignal } from '@angular/core';
-import { Hero } from '../../interfaces/hero';
+import type { MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import type { OnInit, WritableSignal } from '@angular/core';
+import type { Hero } from '../../interfaces/hero';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HeroesService } from '../../services/heroes.service';
 import { catchError, retry, throwError } from 'rxjs';
 import { HeroCardComponent } from '../hero-card/hero-card.component';
@@ -8,12 +11,12 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
-import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-hero-list',
@@ -85,11 +88,17 @@ export class HeroListComponent implements OnInit {
         if (isAdding) {
           this.httpService.addHero(hero)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => this.getHeroes());
+            .subscribe(() => {
+              this.getHeroes()
+              this.showMessage("Héroe modificado con éxito");
+            });
         } else {
           this.httpService.updateHero(hero)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => this.getHeroes());
+            .subscribe(() => {
+              this.getHeroes()
+              this.showMessage("Héroe creado con éxito");
+            });
         }
       });
   }
@@ -101,6 +110,25 @@ export class HeroListComponent implements OnInit {
   public openEditDialog(hero: Hero): void {
     this.open({ hero: hero });
   };
+
+  public openDeleteDialog(heroId: number): void {
+    const delDialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: 'calc(100% - 2rem)',
+      maxWidth: '500px'
+    });
+
+    delDialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) {
+        return;
+      }
+      this.httpService.deleteHero(heroId)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.getHeroes();
+          this.showMessage("Este héroe se ha eliminado");
+        });
+    });
+  }
 
   private showMessage(
     message: string,
