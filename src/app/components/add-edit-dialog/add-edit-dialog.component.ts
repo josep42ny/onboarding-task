@@ -18,18 +18,19 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   templateUrl: './add-edit-dialog.component.html',
   styleUrl: './add-edit-dialog.component.scss'
 })
 export class AddEditDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<AddEditDialogComponent>) { }
+  private readonly dialogRef = inject(MatDialogRef<AddEditDialogComponent>);
   private readonly data: Hero = inject<Hero>(MAT_DIALOG_DATA);
   protected isEditing = computed<boolean>(() => !(this.data === undefined));
   private readonly formBuilder = inject(FormBuilder);
   private readonly urlRegex: RegExp = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+
   public form = this.formBuilder.nonNullable.group({
     id: [{ value: -1, disabled: true }, Validators.required],
     name: [{ value: '', disabled: true }, Validators.required],

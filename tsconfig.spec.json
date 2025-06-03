@@ -5,9 +5,13 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
-      "jasmine"
-    ]
+      "jest"
+    ],
   },
+  "files": [
+    "src/setup-test.js",
+    "src/polyfills.ts",
+  ],
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
