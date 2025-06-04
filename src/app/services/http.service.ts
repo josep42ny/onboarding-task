@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
+import { JsonFormData } from '../components/test-form/test-form.component';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HeroesService {
+export class HttpService {
   private apiServerUrl: String = environment.apiBaseUrl;
   private readonly http: HttpClient = inject(HttpClient);
 
@@ -29,6 +30,10 @@ export class HeroesService {
 
   public deleteHero(heroId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/hero/${heroId}`);
+  }
+
+  public getFormData(): Observable<JsonFormData> {
+    return this.http.get<JsonFormData>(`${this.apiServerUrl}/controls`);
   }
 
 }
