@@ -48,5 +48,61 @@
       "powers": "Super",
       "imageUrl": "https://picsum.photos/seed/7/400/300"
     }
+  ],
+  "controls": [
+    {
+      "name": "name",
+      "label": "Nombre",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "reqired": true
+      }
+    },
+    {
+      "name": "power",
+      "label": "Superpoder",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "reqired": true
+      }
+    },
+    {
+      "name": "location",
+      "label": "Ciudad",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "reqired": true
+      }
+    },
+    {
+      "name": "description",
+      "label": "Descripcción",
+      "value": "",
+      "type": "textarea",
+      "validators": {
+        "reqired": true
+      }
+    },
+    {
+      "name": "imageUrl",
+      "label": "Url de la imagen",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "reqired": true
+      }
+    },
+    {
+      "name": "terms",
+      "label": "Terminos",
+      "value": "",
+      "type": "checkbox",
+      "validators": {
+        "reqired": true
+      }
+    }
   ]
 }

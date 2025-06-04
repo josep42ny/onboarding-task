@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  @if (notFirstPass()) {
+  @for (control of data(); track $index) {
+  <mat-form-field>
+    <mat-label>{{control.label}}</mat-label>
+    <input matInput [type]="control.type" [formControlName]="control.name" [value]="control.value" />
+  </mat-form-field>
+  }
+  }
+  <button type="submit" [disabled]="form.invalid">
+    Save
+  </button>
+</form>

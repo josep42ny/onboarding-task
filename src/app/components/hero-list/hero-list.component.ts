@@ -3,7 +3,7 @@ import type { OnInit, WritableSignal } from '@angular/core';
 import type { Hero } from '../../interfaces/hero';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HeroesService } from '../../services/heroes.service';
+import { HttpService } from '../../services/http.service';
 import { catchError, retry, throwError } from 'rxjs';
 import { HeroCardComponent } from '../hero-card/hero-card.component';
 import { MatGridListModule } from '@angular/material/grid-list'
@@ -17,6 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { JsonFormControls, TestFormComponent } from '../test-form/test-form.component';
 
 @Component({
   selector: 'app-hero-list',
@@ -29,14 +30,16 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
     MatButtonModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    TestFormComponent
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
 })
 export class HeroListComponent implements OnInit {
 
-  public heroes: WritableSignal<Hero[]> = signal([]);
-  private readonly httpService = inject(HeroesService);
+  public heroes = signal<Hero[]>([]);
+  public formData = signal<JsonFormControls[]>([]);
+  private readonly httpService = inject(HttpService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly infoBar = inject(MatSnackBar);
   private readonly destroyRef = inject(DestroyRef);
@@ -45,12 +48,19 @@ export class HeroListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getHeroes();
+    this.loadFormData();
   }
 
   public onSearchSubmit(): void {
     const searchValue = this.searchForm.value.search;
     this.getHeroes(searchValue);
   }
+
+  private loadFormData() {
+    this.httpService.getFormData().subscribe((data: JsonFormControls[]) => {
+      this.formData.set(data);
+    });
+  };
 
   public getHeroes(searchByName: string = ''): void {
     this.httpService.getHeroes(searchByName)
