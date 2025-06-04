@@ -18,8 +18,9 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <button mat-button (click)="openDeleteHeroForm()">Eliminar</button>
-    <button mat-flat-button (click)="openEditHeroForm()"><mat-icon>edit</mat-icon> Editar</button>
+    <button mat-button data-testid="delButton" (click)="openDeleteHeroForm()">Eliminar</button>
+    <button mat-flat-button data-testid="editButton" (click)="openEditHeroForm()"><mat-icon>edit</mat-icon>
+      Editar</button>
   </mat-card-actions>
 
 </mat-card>

@@ -1,63 +1,60 @@
 import type { Hero } from '../../interfaces/hero';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroCardComponent } from './hero-card.component';
-import { Component, ViewChild } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-const TEST_ID: number = 420;
-
-@Component({
-  template:
-    `
-    <app-hero-card (onDelete)="openDeleteDialog($event)" (onEdit)="openEditDialog($event)"
-    [heroInfo]="sampleHero" />
-  `
-})
-class HostCompoent {
-
-  @ViewChild(HeroCardComponent) heroCardComponent!: HeroCardComponent;
-  public sampleHero: Hero = {
-    id: TEST_ID,
-    name: '',
-    powers: '',
-    description: '',
-    location: '',
-    imageUrl: '',
-  }
-  public emittedId: number = 0;
-  public emittedHero: Object = {};
-
-  openEditDialog(hero: Hero) {
-    this.emittedHero = hero;
-  }
-
-  openDeleteDialog(id: number) {
-    this.emittedId = id;
-  }
-
+const EXPECTED_ID: number = 420;
+const EXPECTED_HERO: Hero = {
+  id: EXPECTED_ID,
+  name: '',
+  powers: '',
+  description: '',
+  location: '',
+  imageUrl: '',
 }
 
 describe('HeroCardComponent', () => {
-  let hostComponent: HostCompoent;
-  let hostFixture: ComponentFixture<HostCompoent>;
+  let component: HeroCardComponent;
+  let fixture: ComponentFixture<HeroCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeroCardComponent, HostCompoent],
+      imports: [HeroCardComponent],
     })
       .compileComponents();
 
-    hostFixture = TestBed.createComponent(HostCompoent);
-    hostComponent = hostFixture.componentInstance;
-    hostFixture.detectChanges();
+    fixture = TestBed.createComponent(HeroCardComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('heroInfo', EXPECTED_HERO);
+    fixture.detectChanges();
   });
 
   it('creates', () => {
-    expect(hostComponent.heroCardComponent).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it('outputs id when clicking delete', () => {
-    hostComponent.heroCardComponent.openEditHeroForm();
-    expect(hostComponent.emittedId).toBe(TEST_ID);
+    let recievedId: number | undefined;
+    component.onDelete.subscribe((id: number) => {
+      recievedId = id;
+    });
+
+    fixture.debugElement.query(By.css(`[data-testid="delButton"]`)).triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    expect(recievedId).toBe(EXPECTED_ID);
+  });
+
+  it('outputs hero when clicking edit', () => {
+    let recievedHero: Hero | undefined;
+    component.onEdit.subscribe((hero: Hero) => {
+      recievedHero = hero;
+    });
+
+    fixture.debugElement.query(By.css(`[data-testid="editButton"]`)).triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    expect(recievedHero).toBe(EXPECTED_HERO);
   });
 
 });
