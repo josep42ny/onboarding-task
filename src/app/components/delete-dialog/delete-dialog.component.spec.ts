@@ -22,4 +22,12 @@ describe('DeleteDialogComponent', () => {
   it('creates', () => {
     expect(component).toBeTruthy();
   });
+
+  it('emits the correct value on confirm', () => {
+  })
+
+  it('emits the correct value on cancel', () => {
+
+  })
+
 });
