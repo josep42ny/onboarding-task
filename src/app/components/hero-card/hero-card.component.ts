@@ -18,7 +18,6 @@ import { MatChipsModule } from '@angular/material/chips';
 })
 export class HeroCardComponent {
   public heroInfo = input.required<Hero>();
-  public onCardChange = output<void>();
   public onDelete = output<number>();
   public onEdit = output<Hero>();
 

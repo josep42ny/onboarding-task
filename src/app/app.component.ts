@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   }
 
   private listenToLoading(): void {
-    this.loadingService.getLoadingSubject()
+    this.loadingService.isLoading()
       .pipe(delay(0))
       .subscribe(load =>
         this.loading.set(load)
