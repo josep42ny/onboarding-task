@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { provideNgxSkeletonLoader } from 'ngx-skeleton-loader';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { httpRequestInterceptor } from './interceptors/http-request.interceptor';
+import { httpInterceptor } from './interceptors/http.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([httpRequestInterceptor]),
+      withInterceptors([httpInterceptor]),
     ),
   ]
 };

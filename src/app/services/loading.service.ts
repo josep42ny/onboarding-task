@@ -14,10 +14,6 @@ export class LoadingService {
   }
 
   public setLoading(url: string, loading: boolean): void {
-    /*if (!url) {
-      throw new Error('LoadingService.setLoading: parameter <url> must not be an empty string.');
-    }*/
-
     if (loading) {
       this.loadingMap.set(url, true);
       this.loadingSubject.next(true);

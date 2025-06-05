@@ -17,7 +17,7 @@ import { MatChipsModule } from '@angular/material/chips';
   styleUrl: './hero-card.component.scss'
 })
 export class HeroCardComponent {
-  protected heroInfo = input.required<Hero>();
+  public heroInfo = input.required<Hero>();
   public onDelete = output<number>();
   public onEdit = output<Hero>();
 

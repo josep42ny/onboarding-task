@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 import { LoadingService } from '../services/loading.service';
 import { tap } from 'rxjs';
 
-export const httpRequestInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, next: HttpHandlerFn) => {
+export const httpInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, next: HttpHandlerFn) => {
   const loading = inject(LoadingService);
   loading.setLoading(request.url, true);
 
