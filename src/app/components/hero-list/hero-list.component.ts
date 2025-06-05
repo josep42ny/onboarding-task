@@ -90,14 +90,14 @@ export class HeroListComponent implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
               this.getHeroes()
-              this.showMessage("Héroe modificado con éxito");
+              this.showMessage("Héroe creado con éxito");
             });
         } else {
           this.httpService.updateHero(hero)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
               this.getHeroes()
-              this.showMessage("Héroe creado con éxito");
+              this.showMessage("Héroe modificado con éxito");
             });
         }
       });

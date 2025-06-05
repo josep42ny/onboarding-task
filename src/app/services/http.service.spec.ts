@@ -1,10 +1,10 @@
 import type { Hero } from '../interfaces/hero';
 import { TestBed } from '@angular/core/testing';
-import { HeroesService } from './heroes.service';
 import { HttpErrorResponse, HttpEventType, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@angular/common/http/testing';
 import { environment } from '../../environments/environment.development';
 import { config, firstValueFrom, Observable } from 'rxjs';
+import { HttpService } from './http.service';
 
 interface HeroesParams<T> {
   params: Array<any>,
@@ -29,19 +29,19 @@ const UPDATE_HERO_REQ = `${environment.apiBaseUrl}/hero/${MOCK_HERO.id}`;
 const DELETE_HERO_REQ = `${environment.apiBaseUrl}/hero/${MOCK_HERO.id}`;
 
 describe('HeroesService', () => {
-  let service: HeroesService;
+  let service: HttpService;
   let httpTesting: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        HeroesService,
+        HttpService,
         provideHttpClient(),
         provideHttpClientTesting(),
       ],
     });
     httpTesting = TestBed.inject(HttpTestingController);
-    service = TestBed.inject(HeroesService);
+    service = TestBed.inject(HttpService);
   });
 
   afterEach(() => {
