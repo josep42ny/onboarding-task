@@ -17,7 +17,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { JsonFormData, TestFormComponent } from '../test-form/test-form.component';
 
 @Component({
   selector: 'app-hero-list',
@@ -29,8 +28,7 @@ import { JsonFormData, TestFormComponent } from '../test-form/test-form.componen
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    ReactiveFormsModule,
-    TestFormComponent
+    ReactiveFormsModule
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
@@ -38,7 +36,6 @@ import { JsonFormData, TestFormComponent } from '../test-form/test-form.componen
 export class HeroListComponent implements OnInit {
 
   public heroes: WritableSignal<Hero[]> = signal<Hero[]>([]);
-  public formData: WritableSignal<JsonFormData> = signal<JsonFormData>({ "controls": [], });
   private readonly httpService = inject(HttpService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly infoBar = inject(MatSnackBar);
@@ -48,19 +45,12 @@ export class HeroListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getHeroes();
-    this.loadFormData();
   }
 
   public onSearchSubmit(): void {
     const searchValue = this.searchForm.value.search;
     this.getHeroes(searchValue);
   }
-
-  private loadFormData() {
-    this.httpService.getFormData().subscribe((data: JsonFormData) => {
-      this.formData.set(data);
-    });
-  };
 
   public getHeroes(searchByName: string = ''): void {
     this.httpService.getHeroes(searchByName)
